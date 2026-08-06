@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Подать заявление — ДВЭБ</title>
+<meta name="description" content="Подать заявление на проведение инспекции">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <img src="assets/logo.png" alt="ДВЭБ" class="logo-img">
+      <div class="logo-text">
+        <span class="logo-title">Дальневосточное<br>бюро экспертиз</span>
+      </div>
+    </a>
+    <div class="header-contacts">
+      <a href="tel:+79143896969" class="phone">+7 914 389 69 69</a>
+      <a href="consult.html" class="btn btn-outline">Консультация</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="tel:+79143896969">+7 914 389 69 69</a>
+    <a href="consult.html">Консультация</a>
+    <a href="index.html">На главную</a>
+  </nav>
+</header>
+
+<section class="quiz-page">
+  <div class="container">
+    <div class="quiz-container">
+      <div class="quiz-header">
+        <h1>Заявление на проведение инспекции</h1>
+        <p>Заполните форму — мы свяжемся с вами в ближайшее время</p>
+      </div>
+
+      <div class="quiz-progress" id="quizProgress">
+        <div class="quiz-dot active"></div>
+        <div class="quiz-dot"></div>
+        <div class="quiz-dot"></div>
+        <div class="quiz-dot"></div>
+      </div>
+
+      <form id="quizForm" autocomplete="on">
+
+        <div class="quiz-step active" data-single="true">
+          <label class="quiz-label">Тип инспекции *</label>
+          <div class="quiz-options">
+            <label class="quiz-option">
+              <input type="checkbox" name="inspectionType" value="Санитарно-эпидемиологическая экспертиза">
+              <span>Санитарно-эпидемиологическая экспертиза</span>
+            </label>
+            <label class="quiz-option">
+              <input type="checkbox" name="inspectionType" value="Санитарно-эпидемиологическое обследование">
+              <span>Санитарно-эпидемиологическое обследование</span>
+            </label>
+            <label class="quiz-option">
+              <input type="checkbox" name="inspectionType" value="Гигиеническая оценка результатов исследований и измерений">
+              <span>Гигиеническая оценка результатов исследований и измерений</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="quiz-step" data-single="false">
+          <label class="quiz-label">Тип объекта / вид деятельности *</label>
+          <p style="color:var(--text-muted);font-size:0.82rem;margin-bottom:10px">Можно выбрать несколько</p>
+          <div class="quiz-options">
+            <label class="quiz-option"><input type="checkbox" name="objectType" value="Проект ПДВ"><span>Проект ПДВ</span></label>
+            <label class="quiz-option"><input type="checkbox" name="objectType" value="Проект СЗЗ"><span>Проект СЗЗ (санитарно-защитная зона)</span></label>
+            <label class="quiz-option"><input type="checkbox" name="objectType" value="Проект ЗСО"><span>Проект ЗСО (зона санитарной охраны)</span></label>
+            <label class="quiz-option"><input type="checkbox" name="objectType" value="Проект НДС"><span>Проект НДС (нормативы сбросов)</span></label>
+            <label class="quiz-option"><input type="checkbox" name="objectType" value="Размещение ПРТО"><span>Размещение ПРТО</span></label>
+            <label class="quiz-option"><input type="checkbox" name="objectType" value="Медицинская деятельность"><span>Медицинская деятельность</span></label>
+            <label class="quiz-option"><input type="checkbox" name="objectType" value="Фармацевтическая деятельность"><span>Фармацевтическая деятельность</span></label>
+            <label class="quiz-option"><input type="checkbox" name="objectType" value="Образовательная деятельность"><span>Образовательная деятельность</span></label>
+            <label class="quiz-option"><input type="checkbox" name="objectType" value="Обращение с отходами"><span>Обращение с отходами 1–4 классов</span></label>
+            <label class="quiz-option"><input type="checkbox" name="objectType" value="Экспертиза протоколов"><span>Экспертиза протоколов исследований</span></label>
+            <label class="quiz-option"><input type="checkbox" name="objectType" value="Другое"><span>Другое (опишу в комментарии)</span></label>
+          </div>
+        </div>
+
+        <div class="quiz-step">
+          <label class="quiz-label">Контактная информация</label>
+          <input type="text" name="organization" class="quiz-input" placeholder="Организация (необязательно)">
+          <input type="text" name="name" class="quiz-input" placeholder="Ваше имя *" required>
+          <input type="tel" name="phone" class="quiz-input" placeholder="Телефон *" required>
+          <input type="email" name="email" class="quiz-input" placeholder="Email (необязательно)">
+        </div>
+
+        <div class="quiz-step">
+          <label class="quiz-label">Дополнительная информация</label>
+          <p style="color:var(--text-muted);font-size:0.82rem;margin-bottom:10px">Опишите кратко ваш объект или вопрос</p>
+          <textarea name="message" class="quiz-textarea" placeholder="Например: стоматология в Благовещенске, нужно получить заключение для лицензирования..."></textarea>
+          <div class="quiz-nav">
+            <button type="button" class="btn btn-outline quiz-prev">← Назад</button>
+            <button type="submit" class="btn btn-primary quiz-submit">Отправить →</button>
+          </div>
+        </div>
+
+        <div class="quiz-nav" style="margin-top:24px">
+          <button type="button" class="btn btn-outline quiz-prev" style="visibility:hidden">← Назад</button>
+          <button type="button" class="btn btn-primary quiz-next">Далее →</button>
+          <button type="submit" class="btn btn-primary quiz-submit" style="display:none">Отправить →</button>
+        </div>
+
+        <div class="quiz-step quiz-success" id="quizSuccess">
+          <div class="quiz-success-icon">✅</div>
+          <h2>Заявление отправлено!</h2>
+          <p>Мы свяжемся с вами в ближайшее рабочее время.</p>
+          <p style="margin-top:14px">Если срочно — позвоните: <strong><a href="tel:+79143896969" style="color:var(--brand-teal)">8-914-389-69-69</a></strong></p>
+          <a href="index.html" class="btn btn-outline" style="margin-top:20px">← На главную</a>
+          <p style="margin-top:14px;font-size:0.8rem;color:var(--text-muted)">Также можно <a id="mailLink" href="#" style="color:var(--brand-teal)">отправить письмом</a></p>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-col" style="display:flex;align-items:center;gap:12px">
+      <img src="assets/logo.png" alt="ДВЭБ" class="footer-logo">
+      <p>© 2026 ООО «ДВЭБ»<br>Дальневосточное бюро экспертиз</p>
+    </div>
+    <div class="footer-col" style="text-align:right">
+      <p><a href="tel:+79143896969">+7 914 389 69 69</a></p>
+      <p><a href="mailto:office@двэб.рф">office@двэб.рф</a></p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

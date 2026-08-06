@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Консультация — ДВЭБ</title>
+<meta name="description" content="Получите консультацию по вопросам санитарно-эпидемиологической экспертизы">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <img src="assets/logo.png" alt="ДВЭБ" class="logo-img">
+      <div class="logo-text">
+        <span class="logo-title">Дальневосточное<br>бюро экспертиз</span>
+      </div>
+    </a>
+    <div class="header-contacts">
+      <a href="tel:+79143896969" class="phone">+7 914 389 69 69</a>
+      <a href="quiz.html" class="btn btn-primary">Подать заявление</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="tel:+79143896969">+7 914 389 69 69</a>
+    <a href="quiz.html">Подать заявление</a>
+    <a href="index.html">На главную</a>
+  </nav>
+</header>
+
+<section class="quiz-page">
+  <div class="container">
+    <div class="quiz-container" style="max-width:560px">
+      <div class="quiz-header">
+        <h1>Получить консультацию</h1>
+        <p>Оставьте номер — мы перезвоним!</p>
+      </div>
+
+      <form id="consultForm" style="margin-top:20px">
+        <input type="text" name="name" class="quiz-input" placeholder="Ваше имя *" required>
+        <input type="tel" name="phone" class="quiz-input" placeholder="Номер телефона *" required>
+        <input type="email" name="email" class="quiz-input" placeholder="Email (необязательно)">
+        <textarea name="question" class="quiz-textarea" placeholder="Ваш вопрос (необязательно)" style="margin-top:12px"></textarea>
+
+        <div style="text-align:center;margin-top:22px">
+          <button type="submit" class="btn btn-primary btn-lg">Получить консультацию →</button>
+        </div>
+
+        <p style="text-align:center;margin-top:16px;font-size:0.82rem;color:var(--text-muted)">
+          Или позвоните:<br>
+          <a href="tel:+79143896969" style="font-size:1.25rem;font-weight:500;color:var(--brand-teal)">8-914-389-69-69</a>
+        </p>
+
+        <p style="text-align:center;margin-top:10px;font-size:0.75rem;color:var(--text-muted)">
+          Оставляя заявку, вы соглашаетесь на обработку персональных данных
+        </p>
+      </form>
+
+      <div id="consultSuccess" class="quiz-step quiz-success" style="display:none">
+        <div class="quiz-success-icon">✅</div>
+        <h2>Заявка принята!</h2>
+        <p>Мы перезвоним в ближайшее время.</p>
+        <a href="index.html" class="btn btn-outline" style="margin-top:20px">← На главную</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-col" style="display:flex;align-items:center;gap:12px">
+      <img src="assets/logo.png" alt="ДВЭБ" class="footer-logo">
+      <p>© 2026 ООО «ДВЭБ»<br>Дальневосточное бюро экспертиз</p>
+    </div>
+    <div class="footer-col" style="text-align:right">
+      <p><a href="tel:+79143896969">+7 914 389 69 69</a></p>
+      <p><a href="mailto:office@двэб.рф">office@двэб.рф</a></p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+document.getElementById('consultForm')?.addEventListener('submit', function(e) {
+  e.preventDefault();
+  this.style.display = 'none';
+  document.getElementById('consultSuccess').style.display = 'block';
+});
+</script>
+</body>
+</html>
