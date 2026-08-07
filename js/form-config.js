@@ -3,4 +3,4 @@
  * 
  * URL веб-приложения Google Apps Script.
  */
-window.DVEB_FORM_BACKEND = 'https://script.google.com/macros/s/AKfycbxnRaSLrT_G27aYt-8WxSBldEQvA-D7qkrYzFgMKq2KxAwWUQjj0IzNPQaFwyuVfr_w/exec';
+window.DVEB_FORM_BACKEND = 'https://script.google.com/macros/s/AKfycbw1XTgFeA16I3TXyzMzojCeIAIesQuLceG58hkrEkFQ1uQlPalslibDQtaL0bTyM16B/exec';
