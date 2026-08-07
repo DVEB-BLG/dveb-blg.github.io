@@ -100,6 +100,18 @@
           <label class="quiz-label">Дополнительная информация</label>
           <p style="color:var(--text-muted);font-size:0.82rem;margin-bottom:10px">Опишите кратко ваш объект или вопрос</p>
           <textarea name="message" class="quiz-textarea" placeholder="Например: стоматология в Благовещенске, нужно получить заключение для лицензирования..."></textarea>
+
+          <label class="quiz-label" style="margin-top:20px">📎 Материалы</label>
+          <p style="color:var(--text-muted);font-size:0.82rem;margin-bottom:10px">Загрузите протоколы исследований, проектную документацию, акты, справки или другие документы, относящиеся к заявке</p>
+          <div class="file-drop-zone" id="fileDropZone">
+            <div class="file-drop-icon">📁</div>
+            <p class="file-drop-text">Перетащите файлы сюда или <span class="file-drop-link">выберите файлы</span></p>
+            <p class="file-drop-hint">PDF, DOC, DOCX, XLS, XLSX, JPG, PNG, DWG — до 30 МБ</p>
+            <input type="file" id="fileInput" multiple style="display:none" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.gif,.dwg,.rtf,.odt,.ods,.txt,.csv">
+          </div>
+          <div class="file-list" id="fileList"></div>
+          <p class="file-total" id="fileTotal" style="display:none"></p>
+
           <div class="quiz-nav">
             <button type="button" class="btn btn-outline quiz-prev">← Назад</button>
             <button type="submit" class="btn btn-primary quiz-submit">Отправить →</button>

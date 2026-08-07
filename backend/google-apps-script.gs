@@ -41,13 +41,14 @@ function doPost(e) {
   try {
     var data = JSON.parse(e.postData.contents);
     
-    // Запись в таблицу
+    // Если это загрузка файла
+    if (data.uploadFile) {
+      return handleFileUpload(data);
+    }
+    
+    // Обычная заявка
     writeToSheet(data);
-    
-    // Email уведомление
     sendEmail(data);
-    
-    // Telegram уведомление
     sendTelegram(data);
     
     return ContentService
@@ -58,6 +59,43 @@ function doPost(e) {
       .createTextOutput(JSON.stringify({ success: false, error: err.toString() }))
       .setMimeType(ContentService.MimeType.JSON);
   }
+}
+
+/**
+ * Загрузка файла на Google Drive
+ */
+function handleFileUpload(data) {
+  var folderName = 'ДВЭБ — Заявки с сайта';
+  var folders = DriveApp.getFoldersByName(folderName);
+  var folder = folders.hasNext() ? folders.next() : DriveApp.createFolder(folderName);
+  
+  var bytes = Utilities.base64Decode(data.fileData);
+  var blob = Utilities.newBlob(bytes, data.mimeType, data.fileName);
+  var file = folder.createFile(blob);
+  file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+  
+  var url = file.getUrl();
+  
+  // Уведомление в Telegram
+  var text = '📁 *Новый файл с сайта ДВЭБ*\n\n' +
+    'Имя: ' + escapeMarkdown(data.fileName) + '\n' +
+    'Ссылка: ' + escapeMarkdown(url);
+  
+  var tgUrl = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
+  UrlFetchApp.fetch(tgUrl, {
+    method: 'post',
+    contentType: 'application/json',
+    payload: JSON.stringify({
+      chat_id: TELEGRAM_CHAT_ID,
+      text: text,
+      parse_mode: 'MarkdownV2'
+    }),
+    muteHttpExceptions: true
+  });
+  
+  return ContentService
+    .createTextOutput(JSON.stringify({ success: true, url: url }))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 /**

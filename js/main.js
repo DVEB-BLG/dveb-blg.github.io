@@ -106,6 +106,15 @@ function submitForm(payload) {
       return;
     }
 
+    // Проверка файлов на размер
+    var files = window.DVEB_getSelectedFiles ? window.DVEB_getSelectedFiles() : [];
+    var sizeOk = true;
+    files.forEach(function(f) { if (f.size > 30 * 1024 * 1024) sizeOk = false; });
+    if (!sizeOk) {
+      alert('Один или несколько файлов превышают 30 МБ. Уберите их.');
+      return;
+    }
+
     var data = new FormData(quiz);
     var payload = { formType: 'Заявление на инспекцию' };
     for (var key of data.keys()) {
@@ -113,25 +122,148 @@ function submitForm(payload) {
       payload[key] = values.length > 1 ? values.join(', ') : values[0];
     }
 
-    // Отправляем на бэкенд
+    // Показываем загрузку
+    var submitBtn = quiz.querySelector('.quiz-submit');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Отправка...';
+    }
+
+    // Сначала отправляем текстовые данные
     submitForm(payload);
 
-    // Показываем успех
-    steps.forEach(function(s) { s.classList.remove('active'); });
-    var success = document.getElementById('quizSuccess');
-    if (success) success.classList.add('active');
+    // Если есть файлы — загружаем
+    if (files.length > 0) {
+      var uploaded = 0;
+      var fileLinks = [];
+      files.forEach(function(f, idx) {
+        var reader = new FileReader();
+        reader.onload = function(ev) {
+          var base64 = ev.target.result.split(',')[1];
+          fetch(window.DVEB_FORM_BACKEND, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              uploadFile: true,
+              fileName: f.name,
+              mimeType: f.type || 'application/octet-stream',
+              fileData: base64
+            })
+          }).then(function() {
+            uploaded++;
+            if (submitBtn) submitBtn.textContent = 'Загрузка файлов... (' + uploaded + '/' + files.length + ')';
+            if (uploaded === files.length) showSuccess();
+          }).catch(function() {
+            uploaded++;
+            if (uploaded === files.length) showSuccess();
+          });
+        };
+        reader.readAsDataURL(f);
+      });
+    } else {
+      showSuccess();
+    }
 
-    // Запасной mailto-линк
-    setTimeout(function() {
-      var mailLink = document.getElementById('mailLink');
-      if (mailLink) {
-        var body = Object.keys(payload).map(function(k) {
-          return k + ': ' + (payload[k] || '—');
-        }).join('\n');
-        mailLink.href = 'mailto:office@двэб.рф?subject=Заявление на инспекцию&body=' + encodeURIComponent(body);
-      }
-    }, 500);
+    function showSuccess() {
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Отправить →'; }
+      steps.forEach(function(s) { s.classList.remove('active'); });
+      var success = document.getElementById('quizSuccess');
+      if (success) success.classList.add('active');
+
+      setTimeout(function() {
+        var mailLink = document.getElementById('mailLink');
+        if (mailLink) {
+          var body = Object.keys(payload).map(function(k) {
+            return k + ': ' + (payload[k] || '—');
+          }).join('\n');
+          mailLink.href = 'mailto:office@двэб.рф?subject=Заявление на инспекцию&body=' + encodeURIComponent(body);
+        }
+      }, 500);
+    }
   });
 
   showStep(0);
+})();
+
+// ===== FILE UPLOAD =====
+(function() {
+  var dropZone = document.getElementById('fileDropZone');
+  var fileInput = document.getElementById('fileInput');
+  var fileList = document.getElementById('fileList');
+  var fileTotal = document.getElementById('fileTotal');
+  if (!dropZone || !fileInput) return;
+
+  var MAX_SIZE = 30 * 1024 * 1024; // 30 МБ
+  var selectedFiles = [];
+  var allowedExt = ['.pdf','.doc','.docx','.xls','.xlsx','.jpg','.jpeg','.png','.gif','.dwg','.rtf','.odt','.ods','.txt','.csv'];
+
+  function formatSize(bytes) {
+    if (bytes < 1024) return bytes + ' Б';
+    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' КБ';
+    return (bytes / 1048576).toFixed(1) + ' МБ';
+  }
+
+  function updateFileList() {
+    fileList.innerHTML = '';
+    var totalSize = 0;
+    var hasError = false;
+
+    selectedFiles.forEach(function(f, idx) {
+      totalSize += f.size;
+      var item = document.createElement('div');
+      item.className = 'file-item';
+      var ext = '.' + f.name.split('.').pop().toLowerCase();
+      var sizeError = f.size > MAX_SIZE;
+      if (sizeError) hasError = true;
+      item.innerHTML = '<span class="file-item-icon">📄</span>' +
+        '<span class="file-item-name">' + f.name + (sizeError ? ' ⚠️ слишком большой' : '') + '</span>' +
+        '<span class="file-item-size">' + formatSize(f.size) + '</span>' +
+        '<span class="file-item-remove" data-idx="' + idx + '">✕</span>';
+      fileList.appendChild(item);
+    });
+
+    if (selectedFiles.length > 0) {
+      fileTotal.style.display = 'block';
+      fileTotal.className = hasError ? 'file-total error' : 'file-total';
+      fileTotal.textContent = 'Всего файлов: ' + selectedFiles.length + ', размер: ' + formatSize(totalSize) +
+        (hasError ? ' — уберите файлы больше 30 МБ' : '');
+    } else {
+      fileTotal.style.display = 'none';
+    }
+  }
+
+  function addFiles(files) {
+    Array.prototype.forEach.call(files, function(f) {
+      var ext = '.' + f.name.split('.').pop().toLowerCase();
+      if (allowedExt.indexOf(ext) === -1) {
+        alert('Формат "' + ext + '" не поддерживается: ' + f.name);
+        return;
+      }
+      selectedFiles.push(f);
+    });
+    updateFileList();
+  }
+
+  dropZone.addEventListener('click', function() { fileInput.click(); });
+  fileInput.addEventListener('change', function() { addFiles(this.files); this.value = ''; });
+
+  dropZone.addEventListener('dragover', function(e) { e.preventDefault(); this.classList.add('dragover'); });
+  dropZone.addEventListener('dragleave', function() { this.classList.remove('dragover'); });
+  dropZone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    this.classList.remove('dragover');
+    addFiles(e.dataTransfer.files);
+  });
+
+  fileList.addEventListener('click', function(e) {
+    if (e.target.classList.contains('file-item-remove')) {
+      var idx = parseInt(e.target.dataset.idx);
+      selectedFiles.splice(idx, 1);
+      updateFileList();
+    }
+  });
+
+  // Экспорт для формы
+  window.DVEB_getSelectedFiles = function() { return selectedFiles; };
 })();
