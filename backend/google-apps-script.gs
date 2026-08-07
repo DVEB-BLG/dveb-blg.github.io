@@ -90,7 +90,7 @@ function writeToSheet(data) {
     new Date(),
     data.formType || '—',
     data.name || '—',
-    data.phone || '—',
+    String(data.phone || '—'),      // как текст, чтобы +7 не стал формулой
     data.email || '—',
     data.organization || '—',
     data.inspectionType || '—',
@@ -99,6 +99,10 @@ function writeToSheet(data) {
   ];
   
   sheet.appendRow(row);
+  
+  // Принудительно форматировать колонку телефона как текст
+  var lastRow = sheet.getLastRow();
+  sheet.getRange(lastRow, 4).setNumberFormat('@');
 }
 
 /**
