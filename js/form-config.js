@@ -1,7 +1,6 @@
 /**
  * ДВЭБ — Конфигурация форм
  * 
- * Вставьте URL вашего Google Apps Script веб-приложения сюда.
- * Как получить URL — см. инструкцию в backend/google-apps-script.gs
+ * URL веб-приложения Google Apps Script.
  */
-window.DVEB_FORM_BACKEND = ''; // ← ВСТАВЬТЕ URL СЮДА после настройки Google Apps Script
+window.DVEB_FORM_BACKEND = 'https://script.google.com/macros/s/AKfycbw71Z1pTpj7-ychwG--DNsGLXedaIqLVxp21P2K1HFpEUXQ6bvBIyscy8UrbNYPrPvR/exec';
