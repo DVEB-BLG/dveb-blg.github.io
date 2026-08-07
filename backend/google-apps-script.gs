@@ -246,3 +246,15 @@ function testScript() {
   
   Logger.log('Тест выполнен.');
 }
+
+function testDriveUpload() {
+  var data = {
+    uploadFile: true,
+    fileName: 'test_manual.txt',
+    mimeType: 'text/plain',
+    fileData: Utilities.base64Encode('Тест Drive ДВЭБ'),
+    clientName: 'Тест Тестов'
+  };
+  var result = handleFileUpload(data);
+  Logger.log(result.getContent());
+}
