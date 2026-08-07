@@ -89,11 +89,14 @@ function writeToSheet(data) {
   // Форматируем колонку телефона (D) как текст — чтобы +7 не стал формулой
   sheet.getRange('D:D').setNumberFormat('@');
   
+  // Убираем + из телефона для таблицы (Google воспринимает + как формулу)
+  var phoneForSheet = String(data.phone || '—').replace(/^\+/, '');
+  
   var row = [
     new Date(),
     data.formType || '—',
     data.name || '—',
-    data.phone || '—',
+    phoneForSheet,
     data.email || '—',
     data.organization || '—',
     data.inspectionType || '—',
