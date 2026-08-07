@@ -86,14 +86,14 @@ function writeToSheet(data) {
     sheet.setFrozenRows(1);
   }
   
-  var phone = String(data.phone || '—');
-  if (phone.charAt(0) === '+') phone = "'" + phone;
+  // Форматируем колонку телефона (D) как текст — чтобы +7 не стал формулой
+  sheet.getRange('D:D').setNumberFormat('@');
   
   var row = [
     new Date(),
     data.formType || '—',
     data.name || '—',
-    phone,
+    data.phone || '—',
     data.email || '—',
     data.organization || '—',
     data.inspectionType || '—',
