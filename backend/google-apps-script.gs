@@ -28,8 +28,8 @@
 var NOTIFY_EMAIL = 'office@двэб.рф';
 
 // Telegram-бот (создать через @BotFather)
-var TELEGRAM_BOT_TOKEN = 'ВСТАВЬТЕ_ТОКЕН_БОТА';  // например: 7123456789:AAH...
-var TELEGRAM_CHAT_ID = 'ВСТАВЬТЕ_CHAT_ID';        // например: 8746448641
+var TELEGRAM_BOT_TOKEN = '8634358159:AAFg_0QDArdbs6VBSX6WigK7duuqotfHHdk';
+var TELEGRAM_CHAT_ID = '8746448641';
 
 // ===== / НАСТРОЙКИ =====
 
@@ -136,7 +136,7 @@ function sendEmail(data) {
  * Отправка короткого уведомления в Telegram
  */
 function sendTelegram(data) {
-  if (TELEGRAM_BOT_TOKEN === 'ВСТАВЬТЕ_ТОКЕН_БОТА') return;
+  if (TELEGRAM_BOT_TOKEN === '') return;
   
   var text = [
     '📋 *Новая заявка с сайта ДВЭБ*',
