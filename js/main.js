@@ -24,6 +24,25 @@ document.getElementById('burger')?.addEventListener('click', function() {
   }
 })();
 
+// ===== FORM SUBMIT HELPER =====
+function submitForm(payload) {
+  var backend = window.DVEB_FORM_BACKEND;
+  if (backend) {
+    return fetch(backend, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(function() {});
+  }
+  // Фолбэк: открываем mailto с данными
+  var body = Object.keys(payload).map(function(k) {
+    return k + ': ' + (payload[k] || '—');
+  }).join('\n');
+  window.location.href = 'mailto:office@двэб.рф?subject=Заявка с сайта ДВЭБ&body=' + encodeURIComponent(body);
+  return Promise.resolve();
+}
+
 // ===== QUIZ LOGIC =====
 (function() {
   const quiz = document.getElementById('quizForm');
@@ -79,38 +98,37 @@ document.getElementById('burger')?.addEventListener('click', function() {
   // Submit
   quiz.addEventListener('submit', function(e) {
     e.preventDefault();
+
+    // Проверка чекбокса согласия
+    var consent = document.getElementById('consentCheck');
+    if (consent && !consent.checked) {
+      consent.closest('.consent-checkbox').style.borderColor = '#e53935';
+      return;
+    }
+
     var data = new FormData(quiz);
-    var payload = {};
+    var payload = { formType: 'Заявление на инспекцию' };
     for (var key of data.keys()) {
       var values = data.getAll(key);
       payload[key] = values.length > 1 ? values.join(', ') : values[0];
     }
 
-    var inspectionType = payload.inspectionType || '';
-    var objectType = payload.objectType || '';
-    var org = payload.organization || '';
-    var name = payload.name || '';
-    var phone = payload.phone || '';
-    var email = payload.email || '';
-    var message = payload.message || '';
+    // Отправляем на бэкенд
+    submitForm(payload);
 
-    var text = 'Новое заявление с сайта ДВЭБ%0A%0A' +
-      'Тип: ' + encodeURIComponent(inspectionType) + '%0A' +
-      'Объект: ' + encodeURIComponent(objectType) + '%0A' +
-      'Организация: ' + encodeURIComponent(org) + '%0A' +
-      'Имя: ' + encodeURIComponent(name) + '%0A' +
-      'Телефон: ' + encodeURIComponent(phone) + '%0A' +
-      'Email: ' + encodeURIComponent(email) + '%0A' +
-      'Комментарий: ' + encodeURIComponent(message);
-
+    // Показываем успех
     steps.forEach(function(s) { s.classList.remove('active'); });
     var success = document.getElementById('quizSuccess');
     if (success) success.classList.add('active');
 
+    // Запасной mailto-линк
     setTimeout(function() {
       var mailLink = document.getElementById('mailLink');
       if (mailLink) {
-        mailLink.href = 'mailto:office@двэб.рф?subject=Заявление на инспекцию&body=' + text.replace(/%0A/g, '%0D%0A');
+        var body = Object.keys(payload).map(function(k) {
+          return k + ': ' + (payload[k] || '—');
+        }).join('\n');
+        mailLink.href = 'mailto:office@двэб.рф?subject=Заявление на инспекцию&body=' + encodeURIComponent(body);
       }
     }, 500);
   });

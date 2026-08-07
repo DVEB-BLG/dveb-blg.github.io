@@ -93,10 +93,26 @@
   </div>
 </footer>
 
+<script src="js/form-config.js"></script>
 <script src="js/main.js"></script>
 <script>
 document.getElementById('consultForm')?.addEventListener('submit', function(e) {
   e.preventDefault();
+
+  var consent = this.querySelector('.consent-checkbox input');
+  if (consent && !consent.checked) {
+    consent.closest('.consent-checkbox').style.borderColor = '#e53935';
+    return;
+  }
+
+  var data = new FormData(this);
+  var payload = { formType: 'Консультация' };
+  for (var key of data.keys()) {
+    payload[key] = data.get(key);
+  }
+
+  submitForm(payload);
+
   this.style.display = 'none';
   document.getElementById('consultSuccess').style.display = 'block';
 });
