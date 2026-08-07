@@ -86,25 +86,23 @@ function writeToSheet(data) {
     sheet.setFrozenRows(1);
   }
   
-  // Форматируем колонку телефона (D) как текст — чтобы +7 не стал формулой
-  sheet.getRange('D:D').setNumberFormat('@');
+  // Для таблицы: заменяем +7 на 8 (Google воспринимает + как формулу)
+  var phoneRaw = String(data.phone || '—');
+  var phoneForSheet = phoneRaw.replace(/^\+7/, '8');
+  if (phoneForSheet.charAt(0) === '+') phoneForSheet = phoneForSheet.substring(1);
   
-  // Убираем + из телефона для таблицы (Google воспринимает + как формулу)
-  var phoneForSheet = String(data.phone || '—').replace(/^\+/, '');
+  var nextRow = sheet.getLastRow() + 1;
   
-  var row = [
-    new Date(),
-    data.formType || '—',
-    data.name || '—',
-    phoneForSheet,
-    data.email || '—',
-    data.organization || '—',
-    data.inspectionType || '—',
-    data.objectType || '—',
-    data.message || data.question || '—'
-  ];
-  
-  sheet.appendRow(row);
+  // Записываем по ячейкам — обходим appendRow
+  sheet.getRange(nextRow, 1).setValue(new Date());
+  sheet.getRange(nextRow, 2).setValue(data.formType || '—');
+  sheet.getRange(nextRow, 3).setValue(data.name || '—');
+  sheet.getRange(nextRow, 4).setValue(phoneForSheet);
+  sheet.getRange(nextRow, 5).setValue(data.email || '—');
+  sheet.getRange(nextRow, 6).setValue(data.organization || '—');
+  sheet.getRange(nextRow, 7).setValue(data.inspectionType || '—');
+  sheet.getRange(nextRow, 8).setValue(data.objectType || '—');
+  sheet.getRange(nextRow, 9).setValue(data.message || data.question || '—');
 }
 
 /**
