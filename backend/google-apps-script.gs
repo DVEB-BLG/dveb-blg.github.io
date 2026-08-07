@@ -3,31 +3,12 @@
  * 
  * Принимает заявки с сайта, пишет в Google Таблицу,
  * отправляет email и уведомление в Telegram.
- * 
- * === ИНСТРУКЦИЯ ПО УСТАНОВКЕ ===
- * 
- * 1. Откройте https://sheets.google.com → создайте пустую таблицу
- * 2. Назовите её «ДВЭБ — Заявки с сайта»
- * 3. Меню: Расширения → Apps Script
- * 4. Удалите весь код, вставьте этот файл
- * 5. Заполните НАСТРОЙКИ ниже
- * 6. Нажмите «Сохранить»
- * 7. Нажмите «Начать развертывание» → «Новое развертывание»
- * 8. Тип: «Веб-приложение»
- * 9. Выполнять от имени: «Меня»
- * 10. Доступ: «Все»
- * 11. Скопируйте URL веб-приложения
- * 12. Вставьте его в файл js/form-config.js на сайте
- * 
- * ================================
+ * Файлы сохраняются на Google Drive в папки по заявкам.
  */
 
 // ===== НАСТРОЙКИ =====
 
-// Email для уведомлений о новых заявках
 var NOTIFY_EMAIL = 'office@двэб.рф';
-
-// Telegram-бот (создать через @BotFather)
 var TELEGRAM_BOT_TOKEN = '8634358159:AAFg_0QDArdbs6VBSX6WigK7duuqotfHHdk';
 var TELEGRAM_CHAT_ID = '8746448641';
 
@@ -35,18 +16,16 @@ var TELEGRAM_CHAT_ID = '8746448641';
 
 
 /**
- * Обработка POST-запроса с сайта
+ * Обработка POST-запроса
  */
 function doPost(e) {
   try {
     var data = JSON.parse(e.postData.contents);
     
-    // Если это загрузка файла
     if (data.uploadFile) {
       return handleFileUpload(data);
     }
     
-    // Обычная заявка
     writeToSheet(data);
     sendEmail(data);
     sendTelegram(data);
@@ -61,51 +40,15 @@ function doPost(e) {
   }
 }
 
-/**
- * Загрузка файла на Google Drive
- */
-function handleFileUpload(data) {
-  var folderName = 'ДВЭБ — Заявки с сайта';
-  var folders = DriveApp.getFoldersByName(folderName);
-  var folder = folders.hasNext() ? folders.next() : DriveApp.createFolder(folderName);
-  
-  var bytes = Utilities.base64Decode(data.fileData);
-  var blob = Utilities.newBlob(bytes, data.mimeType, data.fileName);
-  var file = folder.createFile(blob);
-  file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
-  
-  var url = file.getUrl();
-  
-  // Уведомление в Telegram
-  var text = '📁 *Новый файл с сайта ДВЭБ*\n\n' +
-    'Имя: ' + escapeMarkdown(data.fileName) + '\n' +
-    'Ссылка: ' + escapeMarkdown(url);
-  
-  var tgUrl = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
-  UrlFetchApp.fetch(tgUrl, {
-    method: 'post',
-    contentType: 'application/json',
-    payload: JSON.stringify({
-      chat_id: TELEGRAM_CHAT_ID,
-      text: text,
-      parse_mode: 'MarkdownV2'
-    }),
-    muteHttpExceptions: true
-  });
-  
-  return ContentService
-    .createTextOutput(JSON.stringify({ success: true, url: url }))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-
-/**
- * Обработка GET-запроса (проверка что работает)
- */
 function doGet() {
   return ContentService
     .createTextOutput(JSON.stringify({ status: 'ok', service: 'DVEB Form Backend' }))
     .setMimeType(ContentService.MimeType.JSON);
 }
+
+// ============================================
+//          ОБРАБОТКА ЗАЯВОК
+// ============================================
 
 /**
  * Запись заявки в Google Таблицу
@@ -114,7 +57,6 @@ function writeToSheet(data) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getActiveSheet();
   
-  // Заголовки при первом запуске
   if (sheet.getLastRow() === 0) {
     sheet.getRange(1, 1, 1, 9).setValues([[
       'Дата', 'Форма', 'Имя', 'Телефон', 'Email', 
@@ -124,14 +66,12 @@ function writeToSheet(data) {
     sheet.setFrozenRows(1);
   }
   
-  // Для таблицы: заменяем +7 на 8 (Google воспринимает + как формулу)
   var phoneRaw = String(data.phone || '—');
   var phoneForSheet = phoneRaw.replace(/^\+7/, '8');
   if (phoneForSheet.charAt(0) === '+') phoneForSheet = phoneForSheet.substring(1);
   
   var nextRow = sheet.getLastRow() + 1;
   
-  // Записываем по ячейкам — обходим appendRow
   sheet.getRange(nextRow, 1).setValue(new Date());
   sheet.getRange(nextRow, 2).setValue(data.formType || '—');
   sheet.getRange(nextRow, 3).setValue(data.name || '—');
@@ -144,7 +84,7 @@ function writeToSheet(data) {
 }
 
 /**
- * Отправка email с полным текстом заявки
+ * Отправка email
  */
 function sendEmail(data) {
   var subject = 'Новая заявка с сайта ДВЭБ — ' + (data.formType || 'Форма');
@@ -175,7 +115,7 @@ function sendEmail(data) {
 }
 
 /**
- * Отправка короткого уведомления в Telegram
+ * Отправка в Telegram
  */
 function sendTelegram(data) {
   if (TELEGRAM_BOT_TOKEN === '') return;
@@ -197,42 +137,112 @@ function sendTelegram(data) {
   }
   
   var url = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
-  var payload = {
-    chat_id: TELEGRAM_CHAT_ID,
-    text: text.join('\n'),
-    parse_mode: 'MarkdownV2'
-  };
-  
   UrlFetchApp.fetch(url, {
     method: 'post',
     contentType: 'application/json',
-    payload: JSON.stringify(payload),
+    payload: JSON.stringify({
+      chat_id: TELEGRAM_CHAT_ID,
+      text: text.join('\n'),
+      parse_mode: 'MarkdownV2'
+    }),
     muteHttpExceptions: true
   });
 }
+
+// ============================================
+//          ЗАГРУЗКА ФАЙЛОВ
+// ============================================
+
+/**
+ * Приём файла → сохранение на Google Drive в папку заявки
+ */
+function handleFileUpload(data) {
+  // Главная папка
+  var rootName = 'ДВЭБ — Заявки с сайта';
+  var rootFolders = DriveApp.getFoldersByName(rootName);
+  var rootFolder = rootFolders.hasNext() ? rootFolders.next() : DriveApp.createFolder(rootName);
+  
+  // Определяем номер и имя для папки заявки
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var lastRow = sheet.getLastRow();
+  var requestNum = lastRow; // номер заявки = номер строки в таблице
+  var clientName = data.clientName || 'Без_имени';
+  
+  // Очищаем имя для папки (убираем спецсимволы)
+  var safeName = String(clientName).replace(/[^a-zA-Zа-яА-Я0-9\s]/g, '').trim().replace(/\s+/g, '_');
+  if (!safeName) safeName = 'Без_имени';
+  
+  // Падка заявки: "001_Имя_Фамилия"
+  var padNum = ('00' + requestNum).slice(-3);
+  var folderName = padNum + '_' + safeName;
+  
+  // Создаём или находим папку заявки
+  var subFolders = rootFolder.getFoldersByName(folderName);
+  var requestFolder = subFolders.hasNext() ? subFolders.next() : rootFolder.createFolder(folderName);
+  
+  // Сохраняем файл
+  var bytes = Utilities.base64Decode(data.fileData);
+  var blob = Utilities.newBlob(bytes, data.mimeType, data.fileName);
+  var file = requestFolder.createFile(blob);
+  file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+  
+  var fileUrl = file.getUrl();
+  var folderUrl = requestFolder.getUrl();
+  
+  // Уведомление в Telegram
+  var tgText = [
+    '📁 *Новый файл с сайта ДВЭБ*',
+    '',
+    'Заявка: ' + escapeMarkdown(padNum),
+    'Клиент: ' + escapeMarkdown(clientName),
+    'Файл: ' + escapeMarkdown(data.fileName),
+    '',
+    'Папка: ' + escapeMarkdown(folderUrl),
+    'Файл: ' + escapeMarkdown(fileUrl)
+  ].join('\n');
+  
+  UrlFetchApp.fetch('https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage', {
+    method: 'post',
+    contentType: 'application/json',
+    payload: JSON.stringify({
+      chat_id: TELEGRAM_CHAT_ID,
+      text: tgText,
+      parse_mode: 'MarkdownV2'
+    }),
+    muteHttpExceptions: true
+  });
+  
+  return ContentService
+    .createTextOutput(JSON.stringify({ success: true, url: fileUrl, folder: folderUrl }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// ============================================
+//          УТИЛИТЫ
+// ============================================
 
 function escapeMarkdown(str) {
   return String(str).replace(/([_*\[\]()~`>#+\-=|{}.!\\])/g, '\\$1');
 }
 
 /**
- * Тестовая функция — запустить вручную для проверки
+ * Тест
  */
 function testScript() {
   var testData = {
-    formType: 'Консультация',
+    formType: 'Тест',
     name: 'Тест Тестов',
     phone: '+7 999 123 45 67',
     email: 'test@example.com',
     organization: 'Тест ООО',
-    inspectionType: 'Санитарно-эпидемиологическая экспертиза',
+    inspectionType: 'Экспертиза',
     objectType: 'Проект СЗЗ',
-    message: 'Это тестовая заявка для проверки работы бэкенда.'
+    message: 'Тестовая заявка'
   };
   
   writeToSheet(testData);
   sendEmail(testData);
   sendTelegram(testData);
   
-  Logger.log('Тест выполнен. Проверьте таблицу, почту и Telegram.');
+  Logger.log('Тест выполнен.');
 }

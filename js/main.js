@@ -148,7 +148,8 @@ function submitForm(payload) {
               uploadFile: true,
               fileName: f.name,
               mimeType: f.type || 'application/octet-stream',
-              fileData: base64
+              fileData: base64,
+              clientName: payload.name || 'Без_имени'
             })
           }).then(function() {
             uploaded++;
