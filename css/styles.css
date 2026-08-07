@@ -361,6 +361,28 @@ img { max-width: 100%; display: block; }
 ::-webkit-scrollbar-thumb { background: var(--brand-grey); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
+/* ===== LEGAL PAGES ===== */
+.legal-text h2 { font-size: 1.15rem; margin: 28px 0 12px; color: var(--brand-blue); }
+.legal-text h2:first-child { margin-top: 0; }
+.legal-text p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.75; }
+.legal-list { margin: 8px 0 16px; padding-left: 20px; }
+.legal-list li { padding: 4px 0; list-style: disc; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.7; }
+
+/* ===== CONSENT CHECKBOX ===== */
+.consent-checkbox {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 14px; background: var(--bg-tinted);
+  border-radius: var(--radius); cursor: pointer;
+  font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;
+}
+.consent-checkbox input { width: 18px; height: 18px; accent-color: var(--brand-teal); flex-shrink: 0; margin-top: 1px; }
+.consent-checkbox a { color: var(--brand-teal); }
+
+/* ===== FOOTER LEGAL ===== */
+.footer-legal { display: flex; flex-direction: column; gap: 6px; text-align: center; }
+.footer-legal a { font-size: 0.78rem; color: rgba(255,255,255,0.55); transition: color 0.2s; }
+.footer-legal a:hover { color: var(--brand-teal); }
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 960px) {
   .hero-inner { flex-direction: column; }
@@ -388,4 +410,7 @@ img { max-width: 100%; display: block; }
   .quiz-header h1 { font-size: 1.15rem; }
   .hero::before { display: none; }
   .contact-cta { padding: 24px; }
+  .footer-inner { flex-direction: column; text-align: center; }
+  .footer-col { text-align: center !important; }
+  .footer-legal { margin: 12px 0; }
 }
