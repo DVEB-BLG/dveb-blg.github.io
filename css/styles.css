@@ -131,7 +131,7 @@ img { max-width: 100%; display: block; }
 }
 .logo { display: flex; align-items: center; gap: 12px; }
 .logo-img { width: 44px; height: 44px; object-fit: contain; border-radius: 8px; }
-.logo-title { font-size: 0.95rem; font-weight: 500; color: var(--text-primary); line-height: 1.3; }
+.logo-title { font-size: 0.78rem; white-space: nowrap; }
 .header-contacts { display: flex; align-items: center; gap: 20px; }
 .phone {
   font-weight: 500; font-size: 1rem; color: var(--text-primary);
@@ -579,7 +579,7 @@ img { max-width: 100%; display: block; }
   .btn { padding: 10px 18px; font-size: 0.82rem; width: 100%; justify-content: center; }
   .quiz-nav { flex-direction: column-reverse; }
   .quiz-nav .btn { width: 100%; }
-  .logo-title { font-size: 0.82rem; }
+  .logo-title { font-size: 0.72rem; white-space: nowrap; }
   .logo-img { width: 32px; height: 32px; }
   .corner-logo { width: 34px; }
   .stage-num { font-size: 2.5rem; }
