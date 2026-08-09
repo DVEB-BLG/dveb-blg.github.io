@@ -269,7 +269,7 @@ img { max-width: 100%; display: block; }
 .reg-group summary::after { content: '+'; font-size: 1.1rem; color: var(--brand-teal); transition: transform 0.2s; }
 .reg-group[open] summary::after { transform: rotate(45deg); }
 .reg-group summary:hover { background: var(--bg-tinted); }
-.reg-group ol { padding: 0 22px 18px; }
+.reg-group ol { padding: 0 22px 18px 28px; }
 .reg-group ol li { padding: 5px 0; font-size: 0.85rem; color: var(--text-secondary); list-style: decimal; }
 
 /* ===== CONTACT ===== */
