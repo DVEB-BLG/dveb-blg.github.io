@@ -12,6 +12,8 @@
 </head>
 <body>
 
+<img src="assets/logo-white.png" alt="ДВЭБ" class="corner-logo">
+
 <header class="header">
   <div class="header-inner">
     <a href="index.html" class="logo">
@@ -52,7 +54,8 @@
 
       <form id="quizForm" autocomplete="on">
 
-        <div class="quiz-step active" data-single="true">
+        <!-- STEP 0: Тип инспекции -->
+        <div class="quiz-step active" data-step="0" data-single="true">
           <label class="quiz-label">Тип инспекции *</label>
           <div class="quiz-options">
             <label class="quiz-option">
@@ -68,11 +71,16 @@
               <span>Гигиеническая оценка результатов исследований и измерений</span>
             </label>
           </div>
+          <p class="quiz-error" id="error-0">Пожалуйста, выберите тип инспекции</p>
+          <div class="quiz-nav">
+            <button type="button" class="btn btn-outline quiz-prev" style="visibility:hidden">← Назад</button>
+            <button type="button" class="btn btn-primary quiz-next">Вперёд →</button>
+          </div>
         </div>
 
-        <div class="quiz-step" data-single="false">
+        <!-- STEP 1: Тип объекта (single select + Другое) -->
+        <div class="quiz-step" data-step="1" data-single="true">
           <label class="quiz-label">Тип объекта / вид деятельности *</label>
-          <p style="color:var(--text-muted);font-size:0.82rem;margin-bottom:10px">Можно выбрать несколько</p>
           <div class="quiz-options">
             <label class="quiz-option"><input type="checkbox" name="objectType" value="Проект ПДВ"><span>Проект ПДВ</span></label>
             <label class="quiz-option"><input type="checkbox" name="objectType" value="Проект СЗЗ"><span>Проект СЗЗ (санитарно-защитная зона)</span></label>
@@ -84,19 +92,32 @@
             <label class="quiz-option"><input type="checkbox" name="objectType" value="Образовательная деятельность"><span>Образовательная деятельность</span></label>
             <label class="quiz-option"><input type="checkbox" name="objectType" value="Обращение с отходами"><span>Обращение с отходами 1–4 классов</span></label>
             <label class="quiz-option"><input type="checkbox" name="objectType" value="Экспертиза протоколов"><span>Экспертиза протоколов исследований</span></label>
-            <label class="quiz-option"><input type="checkbox" name="objectType" value="Другое"><span>Другое (опишу в комментарии)</span></label>
+            <label class="quiz-option"><input type="checkbox" name="objectType" value="Другое" id="otherOption"><span>Другое</span></label>
+          </div>
+          <input type="text" name="objectTypeOther" class="quiz-input quiz-other-input" id="otherInput" placeholder="Укажите свой вариант" style="display:none; margin-top:10px">
+          <p class="quiz-error" id="error-1">Пожалуйста, выберите тип объекта</p>
+          <div class="quiz-nav">
+            <button type="button" class="btn btn-outline quiz-prev">← Назад</button>
+            <button type="button" class="btn btn-primary quiz-next">Вперёд →</button>
           </div>
         </div>
 
-        <div class="quiz-step">
+        <!-- STEP 2: Контакты -->
+        <div class="quiz-step" data-step="2">
           <label class="quiz-label">Контактная информация</label>
           <input type="text" name="organization" class="quiz-input" placeholder="Организация (необязательно)">
           <input type="text" name="name" class="quiz-input" placeholder="Ваше имя *" required>
           <input type="tel" name="phone" class="quiz-input" placeholder="Телефон *" required>
           <input type="email" name="email" class="quiz-input" placeholder="Email (необязательно)">
+          <p class="quiz-error" id="error-2">Пожалуйста, заполните имя и телефон</p>
+          <div class="quiz-nav">
+            <button type="button" class="btn btn-outline quiz-prev">← Назад</button>
+            <button type="button" class="btn btn-primary quiz-next">Вперёд →</button>
+          </div>
         </div>
 
-        <div class="quiz-step">
+        <!-- STEP 3: Доп.инфо + файлы + отправка -->
+        <div class="quiz-step" data-step="3">
           <label class="quiz-label">Дополнительная информация</label>
           <p style="color:var(--text-muted);font-size:0.82rem;margin-bottom:10px">Опишите кратко ваш объект или вопрос</p>
           <textarea name="message" class="quiz-textarea" placeholder="Например: стоматология в Благовещенске, нужно получить заключение для лицензирования..."></textarea>
@@ -112,23 +133,21 @@
           <div class="file-list" id="fileList"></div>
           <p class="file-total" id="fileTotal" style="display:none"></p>
 
+          <div class="quiz-consent-section" id="consentSection">
+            <label class="consent-checkbox">
+              <input type="checkbox" id="consentCheck">
+              <span>Я ознакомился с <a href="privacy.html" style="color:var(--brand-teal)">Политикой обработки персональных данных</a> и даю согласие на их обработку</span>
+            </label>
+            <p class="quiz-error" id="error-consent">Сначала необходимо согласиться с Политикой обработки персональных данных</p>
+          </div>
+
           <div class="quiz-nav">
             <button type="button" class="btn btn-outline quiz-prev">← Назад</button>
             <button type="submit" class="btn btn-primary quiz-submit">Отправить →</button>
           </div>
         </div>
 
-        <div class="quiz-nav" style="margin-top:24px">
-          <button type="button" class="btn btn-outline quiz-prev" style="visibility:hidden">← Назад</button>
-          <button type="button" class="btn btn-primary quiz-next">Далее →</button>
-          <button type="submit" class="btn btn-primary quiz-submit" style="display:none">Отправить →</button>
-        </div>
-
-        <label class="consent-checkbox" style="margin-top:20px">
-          <input type="checkbox" id="consentCheck" required>
-          <span>Я ознакомился с <a href="privacy.html" style="color:var(--brand-teal)">Политикой обработки персональных данных</a> и даю согласие на их обработку</span>
-        </label>
-
+        <!-- SUCCESS -->
         <div class="quiz-step quiz-success" id="quizSuccess">
           <div class="quiz-success-icon">✅</div>
           <h2>Заявление отправлено!</h2>

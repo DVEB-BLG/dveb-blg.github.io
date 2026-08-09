@@ -35,7 +35,6 @@ function submitForm(payload) {
       body: JSON.stringify(payload)
     }).catch(function() {});
   }
-  // Фолбэк: открываем mailto с данными
   var body = Object.keys(payload).map(function(k) {
     return k + ': ' + (payload[k] || '—');
   }).join('\n');
@@ -48,9 +47,13 @@ function submitForm(payload) {
   const quiz = document.getElementById('quizForm');
   if (!quiz) return;
 
-  const steps = quiz.querySelectorAll('.quiz-step');
+  const steps = quiz.querySelectorAll('.quiz-step:not(.quiz-success)');
   const dots = document.querySelectorAll('.quiz-dot');
   let current = 0;
+  const totalSteps = steps.length; // 4 steps: 0,1,2,3
+
+  // Track which steps have been completed/validated
+  let maxReached = 0;
 
   function showStep(i) {
     steps.forEach(function(s, idx) {
@@ -60,53 +63,163 @@ function submitForm(payload) {
       d.classList.toggle('active', idx === i);
       d.classList.toggle('done', idx < i);
     });
-    var prevBtn = quiz.querySelector('.quiz-prev');
-    var nextBtn = quiz.querySelector('.quiz-next');
-    var submitBtn = quiz.querySelector('.quiz-submit');
-    if (prevBtn) prevBtn.style.visibility = i === 0 ? 'hidden' : 'visible';
-    if (nextBtn) nextBtn.style.display = i === steps.length - 2 ? 'none' : 'inline-flex';
-    if (submitBtn) submitBtn.style.display = i === steps.length - 2 ? 'inline-flex' : 'none';
   }
 
-  quiz.querySelector('.quiz-next')?.addEventListener('click', function() {
-    if (current < steps.length - 2) { current++; showStep(current); }
-  });
+  // Validate step before proceeding
+  function validateStep(stepIdx) {
+    var step = steps[stepIdx];
+    var errorEl = step.querySelector('.quiz-error');
+    if (errorEl) errorEl.style.display = 'none';
 
-  quiz.querySelector('.quiz-prev')?.addEventListener('click', function() {
-    if (current > 0) { current--; showStep(current); }
-  });
+    if (stepIdx === 0) {
+      // Тип инспекции — must select at least one
+      var checked = step.querySelectorAll('input[name="inspectionType"]:checked');
+      if (checked.length === 0) {
+        if (errorEl) errorEl.style.display = 'block';
+        return false;
+      }
+    }
 
-  // Option selection
-  document.querySelectorAll('.quiz-option').forEach(function(opt) {
-    opt.addEventListener('click', function() {
-      var input = this.querySelector('input');
-      if (input) {
-        var step = this.closest('.quiz-step');
-        if (step && step.dataset.single === 'true') {
-          step.querySelectorAll('.quiz-option').forEach(function(o) {
-            o.classList.remove('selected');
-            var inp = o.querySelector('input');
-            if (inp) inp.checked = false;
-          });
+    if (stepIdx === 1) {
+      // Тип объекта — must select exactly one (single select)
+      var checkedObj = step.querySelectorAll('input[name="objectType"]:checked');
+      if (checkedObj.length === 0) {
+        if (errorEl) errorEl.style.display = 'block';
+        return false;
+      }
+      // If "Другое" selected, text field must be filled
+      var otherChecked = step.querySelector('#otherOption');
+      if (otherChecked && otherChecked.checked) {
+        var otherText = document.getElementById('otherInput');
+        if (otherText && !otherText.value.trim()) {
+          if (errorEl) {
+            errorEl.textContent = 'Пожалуйста, укажите свой вариант';
+            errorEl.style.display = 'block';
+          }
+          return false;
         }
-        input.checked = !input.checked;
-        this.classList.toggle('selected', input.checked);
+      }
+    }
+
+    if (stepIdx === 2) {
+      // Контакты — name and phone required
+      var name = step.querySelector('input[name="name"]');
+      var phone = step.querySelector('input[name="phone"]');
+      if ((name && !name.value.trim()) || (phone && !phone.value.trim())) {
+        if (errorEl) errorEl.style.display = 'block';
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  // Next button handler
+  quiz.querySelectorAll('.quiz-next').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      // Find the step this button belongs to
+      var step = this.closest('.quiz-step');
+      var stepIdx = Array.prototype.indexOf.call(steps, step);
+
+      if (!validateStep(stepIdx)) return;
+
+      if (stepIdx < totalSteps - 1) {
+        stepIdx++;
+        current = stepIdx;
+        if (current > maxReached) maxReached = current;
+        showStep(current);
       }
     });
   });
 
-  // Submit
+  // Prev button handler
+  quiz.querySelectorAll('.quiz-prev').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var step = this.closest('.quiz-step');
+      var stepIdx = Array.prototype.indexOf.call(steps, step);
+      if (stepIdx > 0) {
+        stepIdx--;
+        current = stepIdx;
+        showStep(current);
+      }
+    });
+  });
+
+  // Option selection — handle single-select steps AND multi-select steps
+  document.querySelectorAll('.quiz-option').forEach(function(opt) {
+    opt.addEventListener('click', function(e) {
+      // Prevent the label from toggling twice
+      e.preventDefault();
+      var input = this.querySelector('input');
+      if (!input) return;
+
+      var step = this.closest('.quiz-step');
+      var isSingle = step && step.dataset.single === 'true';
+
+      if (isSingle) {
+        // Deselect all others in this step
+        step.querySelectorAll('.quiz-option').forEach(function(o) {
+          o.classList.remove('selected');
+          var inp = o.querySelector('input');
+          if (inp) inp.checked = false;
+        });
+        input.checked = true;
+        this.classList.add('selected');
+      } else {
+        input.checked = !input.checked;
+        this.classList.toggle('selected', input.checked);
+      }
+
+      // Handle "Другое" — show/hide text input
+      if (input.id === 'otherOption') {
+        var otherInput = document.getElementById('otherInput');
+        if (otherInput) {
+          otherInput.style.display = input.checked ? 'block' : 'none';
+          if (!input.checked) otherInput.value = '';
+        }
+      }
+
+      // Hide error when something is selected
+      var errorEl = step.querySelector('.quiz-error');
+      if (errorEl) errorEl.style.display = 'none';
+    });
+  });
+
+  // Hide contact step errors on input
+  steps.forEach(function(step, idx) {
+    if (idx === 2) {
+      step.querySelectorAll('input').forEach(function(inp) {
+        inp.addEventListener('input', function() {
+          var errorEl = step.querySelector('.quiz-error');
+          if (errorEl) errorEl.style.display = 'none';
+        });
+      });
+    }
+  });
+
+  // ===== SUBMIT =====
   quiz.addEventListener('submit', function(e) {
     e.preventDefault();
 
-    // Проверка чекбокса согласия
+    // Validate all steps up to the last
+    for (var i = 0; i < totalSteps - 1; i++) {
+      if (!validateStep(i)) {
+        current = i;
+        showStep(i);
+        return;
+      }
+    }
+
+    // Check consent
     var consent = document.getElementById('consentCheck');
+    var consentError = document.getElementById('error-consent');
     if (consent && !consent.checked) {
+      if (consentError) consentError.style.display = 'block';
       consent.closest('.consent-checkbox').style.borderColor = '#e53935';
       return;
     }
 
-    // Проверка файлов на размер
+    // Check files for size
     var files = window.DVEB_getSelectedFiles ? window.DVEB_getSelectedFiles() : [];
     var sizeOk = true;
     files.forEach(function(f) { if (f.size > 30 * 1024 * 1024) sizeOk = false; });
@@ -122,21 +235,26 @@ function submitForm(payload) {
       payload[key] = values.length > 1 ? values.join(', ') : values[0];
     }
 
-    // Показываем загрузку
+    // If "Другое" selected, append custom text
+    var otherOpt = document.getElementById('otherOption');
+    if (otherOpt && otherOpt.checked) {
+      var otherText = document.getElementById('otherInput');
+      if (otherText && otherText.value.trim()) {
+        payload['objectType'] = 'Другое: ' + otherText.value.trim();
+      }
+    }
+
     var submitBtn = quiz.querySelector('.quiz-submit');
     if (submitBtn) {
       submitBtn.disabled = true;
       submitBtn.textContent = 'Отправка...';
     }
 
-    // Сначала отправляем текстовые данные
     submitForm(payload);
 
-    // Если есть файлы — загружаем
     if (files.length > 0) {
       var uploaded = 0;
-      var fileLinks = [];
-      files.forEach(function(f, idx) {
+      files.forEach(function(f) {
         var reader = new FileReader();
         reader.onload = function(ev) {
           var base64 = ev.target.result.split(',')[1];
@@ -168,7 +286,19 @@ function submitForm(payload) {
 
     function showSuccess() {
       if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Отправить →'; }
+
+      // Hide ALL steps including consent
       steps.forEach(function(s) { s.classList.remove('active'); });
+
+      // Hide consent section
+      var consentSection = document.getElementById('consentSection');
+      if (consentSection) consentSection.style.display = 'none';
+
+      // Hide progress dots
+      var progress = document.getElementById('quizProgress');
+      if (progress) progress.style.display = 'none';
+
+      // Show success
       var success = document.getElementById('quizSuccess');
       if (success) success.classList.add('active');
 
@@ -195,7 +325,7 @@ function submitForm(payload) {
   var fileTotal = document.getElementById('fileTotal');
   if (!dropZone || !fileInput) return;
 
-  var MAX_SIZE = 30 * 1024 * 1024; // 30 МБ
+  var MAX_SIZE = 30 * 1024 * 1024;
   var selectedFiles = [];
   var allowedExt = ['.pdf','.doc','.docx','.xls','.xlsx','.jpg','.jpeg','.png','.gif','.dwg','.rtf','.odt','.ods','.txt','.csv'];
 
@@ -265,6 +395,5 @@ function submitForm(payload) {
     }
   });
 
-  // Экспорт для формы
   window.DVEB_getSelectedFiles = function() { return selectedFiles; };
 })();

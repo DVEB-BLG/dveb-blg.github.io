@@ -345,6 +345,12 @@ img { max-width: 100%; display: block; }
 .quiz-textarea::placeholder { color: var(--text-muted); }
 .quiz-textarea:focus { outline: none; border-color: var(--brand-teal); background: #fff; }
 .quiz-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 26px; gap: 16px; }
+.quiz-error { display: none; color: #e53935; font-size: 0.82rem; margin-top: 10px; }
+.quiz-other-input { margin-top: 10px; }
+.consent-checkbox { border: 1.5px solid var(--border); border-radius: var(--radius); padding: 14px; margin-top: 20px; display: flex; align-items: flex-start; gap: 10px; cursor: pointer; transition: border-color 0.2s; }
+.consent-checkbox:has(input:checked) { border-color: var(--brand-teal); }
+.consent-checkbox input { margin-top: 2px; cursor: pointer; }
+.consent-checkbox span { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.4; }
 .quiz-progress { display: flex; gap: 4px; margin-bottom: 30px; }
 .quiz-dot { flex: 1; height: 4px; background: var(--bg-tinted); border-radius: 3px; transition: 0.3s; }
 .quiz-dot.active { background: var(--brand-teal); }
