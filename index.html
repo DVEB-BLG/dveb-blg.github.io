@@ -562,6 +562,7 @@
   if (!mapEl || typeof L === 'undefined') return;
 
   var center = [50.25792, 127.52753];
+  var officePos = [50.25803, 127.52742];
 
   var map = L.map('map', {
     zoomControl: true,
@@ -581,7 +582,7 @@
     iconAnchor: [24, 24],
     popupAnchor: [0, -26]
   });
-  L.marker(center, { icon: logoIcon }).addTo(map)
+  L.marker(officePos, { icon: logoIcon }).addTo(map)
     .bindPopup('<strong>ДВЭБ — Дальневосточное бюро экспертиз</strong><p>ул. Шевченко, 7 — 3 этаж<br>помещение № 20001, офис № 307</p>');
 
   // Entrance marker (arrow) — above-right of logo, near building border
