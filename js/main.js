@@ -102,10 +102,11 @@ function submitForm(payload) {
     }
 
     if (stepIdx === 2) {
-      // Контакты — name and phone required
-      var name = step.querySelector('input[name="name"]');
-      var phone = step.querySelector('input[name="phone"]');
-      if ((name && !name.value.trim()) || (phone && !phone.value.trim())) {
+      // Контакты — all fields required
+      var inputs = step.querySelectorAll('input[required]');
+      var allFilled = true;
+      inputs.forEach(function(inp) { if (!inp.value.trim()) allFilled = false; });
+      if (!allFilled) {
         if (errorEl) errorEl.style.display = 'block';
         return false;
       }
