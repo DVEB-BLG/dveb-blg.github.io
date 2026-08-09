@@ -573,25 +573,25 @@
     maxZoom: 19
   }).addTo(map);
 
-  // Office marker (logo)
+  // Office marker (logo image)
   var logoIcon = L.divIcon({
     className: 'map-logo-marker',
-    html: '<div class="map-marker-logo">🏢</div>',
-    iconSize: [44, 44],
-    iconAnchor: [22, 22],
-    popupAnchor: [0, -24]
+    html: '<div class="map-marker-logo"><img src="assets/logo-transparent.png" alt="ДВЭБ"></div>',
+    iconSize: [48, 48],
+    iconAnchor: [24, 24],
+    popupAnchor: [0, -26]
   });
   L.marker(center, { icon: logoIcon }).addTo(map)
     .bindPopup('<strong>ДВЭБ — Дальневосточное бюро экспертиз</strong><p>ул. Шевченко, 7 — 3 этаж<br>помещение № 20001, офис № 307</p>');
 
-  // Entrance marker (offset slightly toward street)
-  var entrance = [50.25805, 127.52735];
+  // Entrance marker (arrow) — south side, near corner
+  var entrance = [50.25780, 127.52772];
   var entranceIcon = L.divIcon({
     className: 'map-entrance-marker',
-    html: '<div class="map-marker-entrance">🚪</div>',
-    iconSize: [36, 36],
-    iconAnchor: [18, 18],
-    popupAnchor: [0, -20]
+    html: '<div class="map-marker-arrow">➤</div>',
+    iconSize: [40, 40],
+    iconAnchor: [20, 20],
+    popupAnchor: [0, -22]
   });
   L.marker(entrance, { icon: entranceIcon }).addTo(map)
     .bindPopup('<strong>Вход в здание</strong><p>Центральный вход<br>Далее — на 3 этаж, офис 307</p>');

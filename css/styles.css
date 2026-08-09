@@ -446,24 +446,27 @@ img { max-width: 100%; display: block; }
 
 /* Custom map markers */
 .map-marker-logo {
-  width: 44px; height: 44px;
+  width: 48px; height: 48px;
   background: #fff;
   border: 3px solid var(--brand-teal);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.3rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.3);
   cursor: pointer;
+  overflow: hidden;
 }
-.map-marker-entrance {
-  width: 36px; height: 36px;
-  background: #fff;
-  border: 3px solid #FF6B35;
+.map-marker-logo img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+.map-marker-arrow {
+  width: 40px; height: 40px;
+  background: #FF6B35;
+  border: 2px solid #fff;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
   cursor: pointer;
+  font-size: 1.3rem;
+  color: #fff;
+  font-weight: 700;
 }
 .leaflet-popup-content-wrapper { border-radius: var(--radius); box-shadow: var(--shadow-lg); }
 .leaflet-popup-content { margin: 16px 18px; font-family: var(--font); }
