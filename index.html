@@ -527,7 +527,7 @@
       <div class="map-info">
         <div class="map-info-item"><span class="map-info-icon">📍</span><div><strong>Адрес</strong>675004, Амурская область,<br>г. Благовещенск, ул. Шевченко, 7</div></div>
         <div class="map-info-item"><span class="map-info-icon">🏢</span><div><strong>Офис</strong>3 этаж, помещение № 20001,<br>офис № 307</div></div>
-        <div class="map-info-item"><span class="map-info-icon">🚪</span><div><strong>Вход</strong>Центральный вход в здание,<br>далее на 3 этаж</div></div>
+        <div class="map-info-item"><span class="map-info-icon">🚪</span><div><strong>Вход</strong>Вход со двора, через проезд<br>с улицы Шевченко</div></div>
         <div class="map-info-item"><span class="map-info-icon">📞</span><div><strong>Телефон</strong><a href="tel:+79143896969" style="color:var(--brand-teal)">+7 914 389 69 69</a></div></div>
       </div>
     </div>
@@ -565,8 +565,8 @@
 
   var map = L.map('map', {
     zoomControl: true,
-    scrollWheelZoom: false
-  }).setView(center, 17);
+    scrollWheelZoom: true
+  }).setView(center, 18);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap',
@@ -584,17 +584,17 @@
   L.marker(center, { icon: logoIcon }).addTo(map)
     .bindPopup('<strong>ДВЭБ — Дальневосточное бюро экспертиз</strong><p>ул. Шевченко, 7 — 3 этаж<br>помещение № 20001, офис № 307</p>');
 
-  // Entrance marker (arrow) — south side, near corner
-  var entrance = [50.25780, 127.52772];
+  // Entrance marker (arrow) — above-right of logo, near building border
+  var entrance = [50.25802, 127.52775];
   var entranceIcon = L.divIcon({
     className: 'map-entrance-marker',
-    html: '<div class="map-marker-arrow">➤</div>',
+    html: '<div class="map-marker-arrow">⬇</div>',
     iconSize: [40, 40],
     iconAnchor: [20, 20],
     popupAnchor: [0, -22]
   });
   L.marker(entrance, { icon: entranceIcon }).addTo(map)
-    .bindPopup('<strong>Вход в здание</strong><p>Центральный вход<br>Далее — на 3 этаж, офис 307</p>');
+    .bindPopup('<strong>Вход</strong><p>Вход со двора, через проезд<br>с улицы Шевченко. Далее — 3 этаж, офис 307</p>');
 
   // Open popup on load
   map.eachLayer(function(layer) {
