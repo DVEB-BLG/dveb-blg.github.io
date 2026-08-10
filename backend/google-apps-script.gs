@@ -111,7 +111,10 @@ function sendEmail(data) {
     'Это автоматическое уведомление. Не отвечайте на это письмо.'
   ].join('\n');
   
-  MailApp.sendEmail(NOTIFY_EMAIL, subject, body);
+  GmailApp.sendEmail(NOTIFY_EMAIL, subject, body, {
+    from: 'office@двэб.рф',
+    name: 'Сайт ДВЭБ'
+  });
 }
 
 /**
