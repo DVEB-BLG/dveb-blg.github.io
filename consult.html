@@ -116,6 +116,8 @@ document.getElementById('consultForm')?.addEventListener('submit', function(e) {
   submitForm(payload);
 
   this.style.display = 'none';
+  var header = document.querySelector('.quiz-header');
+  if (header) header.style.display = 'none';
   document.getElementById('consultSuccess').style.display = 'block';
 });
 </script>
