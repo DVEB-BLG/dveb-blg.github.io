@@ -299,13 +299,19 @@ function submitForm(payload) {
       var progress = document.getElementById('quizProgress');
       if (progress) progress.style.display = 'none';
 
-      // Hide quiz header
-      var quizHeader = document.querySelector('.quiz-header');
-      if (quizHeader) quizHeader.style.display = 'none';
-
       // Show success
       var success = document.getElementById('quizSuccess');
       if (success) success.classList.add('active');
+
+      setTimeout(function() {
+        var mailLink = document.getElementById('mailLink');
+        if (mailLink) {
+          var body = Object.keys(payload).map(function(k) {
+            return k + ': ' + (payload[k] || '—');
+          }).join('\n');
+          mailLink.href = 'mailto:office@двэб.рф?subject=Заявление на инспекцию&body=' + encodeURIComponent(body);
+        }
+      }, 500);
 
 
     }
