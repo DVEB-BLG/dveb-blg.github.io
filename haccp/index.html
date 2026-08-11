@@ -6,294 +6,299 @@
     <title>Разработка ХАССП для общепита под ключ — ДВЭБ, Благовещенск</title>
     <meta name="description" content="Разработка документации ХАССП для ресторанов, кафе, столовых и пищевых производств. Эксперты из Роспотребнадзора. Гарантия прохождения проверок. Благовещенск и Дальний Восток.">
     <style>
-        /* ===== RESET & BASE ===== */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; font-size: 16px; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            color: #1a1a2e;
-            line-height: 1.6;
-            background: #fff;
-            overflow-x: hidden;
+            color: #1e293b; line-height: 1.6; background: #fafbfc; overflow-x: hidden;
         }
         img { max-width: 100%; height: auto; display: block; }
         a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
 
-        /* ===== VARIABLES ===== */
         :root {
-            --green: #0a7c3a;
-            --green-dark: #06552a;
-            --green-light: #e8f5e9;
+            --green: #16a34a;
+            --green-soft: #f0fdf4;
+            --green-mid: #bbf7d0;
+            --blue-soft: #eff6ff;
             --orange: #f97316;
-            --orange-dark: #ea580c;
-            --dark: #0f172a;
+            --orange-soft: #fff7ed;
+            --dark: #1e293b;
             --gray: #64748b;
-            --gray-light: #f1f5f9;
-            --white: #ffffff;
-            --radius: 14px;
-            --shadow: 0 4px 24px rgba(0,0,0,0.08);
-            --shadow-lg: 0 12px 48px rgba(0,0,0,0.12);
+            --gray-light: #f8fafc;
+            --border: #e2e8f0;
+            --radius: 16px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+            --shadow: 0 2px 12px rgba(0,0,0,0.06);
+            --shadow-lg: 0 8px 30px rgba(0,0,0,0.08);
         }
 
-        /* ===== CONTAINER ===== */
-        .container { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+        .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
 
-        /* ===== BUTTONS ===== */
+        /* Buttons */
         .btn {
             display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-            padding: 16px 36px; border-radius: 50px; font-size: 1.05rem; font-weight: 700;
-            transition: all 0.3s ease; cursor: pointer; border: none; text-align: center;
+            padding: 14px 32px; border-radius: 12px; font-size: 1rem; font-weight: 600;
+            transition: all 0.25s ease; cursor: pointer; border: none; text-align: center;
         }
-        .btn-primary { background: var(--green); color: #fff; box-shadow: 0 4px 16px rgba(10,124,58,0.3); }
-        .btn-primary:hover { background: var(--green-dark); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(10,124,58,0.4); }
-        .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.5); }
-        .btn-outline:hover { background: #fff; color: var(--dark); border-color: #fff; }
-        .btn-orange { background: var(--orange); color: #fff; box-shadow: 0 4px 16px rgba(249,115,22,0.3); }
-        .btn-orange:hover { background: var(--orange-dark); transform: translateY(-2px); }
+        .btn-primary { background: var(--green); color: #fff; }
+        .btn-primary:hover { background: #15803d; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(22,163,74,0.25); }
+        .btn-outline { background: #fff; color: var(--dark); border: 1.5px solid var(--border); }
+        .btn-outline:hover { border-color: var(--green); color: var(--green); }
+        .btn-orange { background: var(--orange); color: #fff; }
+        .btn-orange:hover { background: #ea580c; transform: translateY(-1px); }
 
-        /* ===== SECTION TITLE ===== */
+        /* Section headers */
         .section-label {
-            display: inline-block; font-size: 0.85rem; font-weight: 700; letter-spacing: 2px;
-            text-transform: uppercase; color: var(--green); margin-bottom: 12px;
+            display: inline-block; font-size: 0.82rem; font-weight: 700; letter-spacing: 1.5px;
+            text-transform: uppercase; color: var(--green); margin-bottom: 10px;
         }
-        .section-title { font-size: 2.3rem; font-weight: 800; line-height: 1.2; margin-bottom: 16px; color: var(--dark); }
-        .section-subtitle { font-size: 1.1rem; color: var(--gray); max-width: 680px; margin: 0 auto; }
+        .section-title { font-size: 2.1rem; font-weight: 800; line-height: 1.25; margin-bottom: 14px; color: var(--dark); }
+        .section-subtitle { font-size: 1.05rem; color: var(--gray); max-width: 640px; margin: 0 auto; }
         .text-center { text-align: center; }
 
-        /* ===== HERO ===== */
+        /* ===== HERO — light ===== */
         .hero {
-            position: relative; min-height: 92vh; display: flex; align-items: center;
-            background: linear-gradient(135deg, rgba(6,85,42,0.92) 0%, rgba(10,124,58,0.85) 50%, rgba(15,23,42,0.9) 100%),
-                        url('img/hero.webp') center/cover;
-            color: #fff; padding: 80px 0;
+            background: var(--green-soft);
+            padding: 70px 0 60px;
+            position: relative; overflow: hidden;
         }
-        .hero-content { max-width: 680px; }
+        .hero::before {
+            content: ''; position: absolute; top: -100px; right: -100px;
+            width: 400px; height: 400px; border-radius: 50%;
+            background: var(--green-mid); opacity: 0.4; filter: blur(40px);
+        }
+        .hero::after {
+            content: ''; position: absolute; bottom: -80px; left: -80px;
+            width: 300px; height: 300px; border-radius: 50%;
+            background: #c7e7ff; opacity: 0.3; filter: blur(40px);
+        }
+        .hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; }
         .hero-badge {
             display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(255,255,255,0.15); backdrop-filter: blur(10px);
-            padding: 8px 18px; border-radius: 50px; font-size: 0.9rem; font-weight: 600;
-            margin-bottom: 24px; border: 1px solid rgba(255,255,255,0.2);
+            background: #fff; padding: 7px 16px; border-radius: 50px;
+            font-size: 0.85rem; font-weight: 600; color: var(--dark);
+            margin-bottom: 20px; box-shadow: var(--shadow-sm); border: 1px solid var(--border);
         }
-        .hero h1 { font-size: 3rem; font-weight: 900; line-height: 1.15; margin-bottom: 20px; }
-        .hero h1 span { color: #4ade80; }
-        .hero-text { font-size: 1.2rem; opacity: 0.92; margin-bottom: 36px; }
-        .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
-        .hero-stats { display: flex; gap: 40px; margin-top: 56px; flex-wrap: wrap; }
-        .hero-stat-num { font-size: 2.2rem; font-weight: 900; color: #4ade80; }
-        .hero-stat-label { font-size: 0.9rem; opacity: 0.8; }
+        .hero h1 { font-size: 2.7rem; font-weight: 800; line-height: 1.15; margin-bottom: 18px; color: var(--dark); }
+        .hero h1 span { color: var(--green); }
+        .hero-text { font-size: 1.1rem; color: var(--gray); margin-bottom: 28px; }
+        .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+        .hero-stats { display: flex; gap: 32px; margin-top: 40px; flex-wrap: wrap; }
+        .hero-stat-num { font-size: 1.8rem; font-weight: 800; color: var(--green); }
+        .hero-stat-label { font-size: 0.85rem; color: var(--gray); }
+        .hero-visual {
+            border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-lg);
+        }
+        .hero-visual img { width: 100%; height: 360px; object-fit: cover; }
 
         /* ===== TRUST BAR ===== */
-        .trust-bar { background: var(--gray-light); padding: 32px 0; border-bottom: 1px solid #e2e8f0; }
-        .trust-items { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 24px; }
-        .trust-item { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--dark); font-size: 0.95rem; }
-        .trust-icon { width: 40px; height: 40px; background: var(--green); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.2rem; flex-shrink: 0; }
+        .trust-bar { background: #fff; padding: 24px 0; border-bottom: 1px solid var(--border); }
+        .trust-items { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; }
+        .trust-item { display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--dark); font-size: 0.9rem; }
+        .trust-icon { font-size: 1.3rem; }
 
-        /* ===== PAIN SECTION ===== */
-        .pain { padding: 90px 0; background: #fff; }
-        .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 48px; }
+        /* ===== PAIN ===== */
+        .pain { padding: 80px 0; }
+        .pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
         .pain-card {
-            background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--radius);
-            padding: 32px; transition: transform 0.3s; position: relative; overflow: hidden;
+            background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 28px; transition: all 0.25s; box-shadow: var(--shadow-sm);
         }
-        .pain-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
-        .pain-card-icon { font-size: 2.5rem; margin-bottom: 16px; }
-        .pain-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; color: #991b1b; }
-        .pain-card p { color: #64748b; font-size: 0.98rem; }
-        .pain-card-tag { display: inline-block; background: #ef4444; color: #fff; padding: 4px 12px; border-radius: 50px; font-size: 0.8rem; font-weight: 700; margin-top: 12px; }
+        .pain-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+        .pain-card-icon { font-size: 2rem; margin-bottom: 12px; }
+        .pain-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; color: #dc2626; }
+        .pain-card p { color: var(--gray); font-size: 0.95rem; }
+        .pain-card-tag { display: inline-block; background: #fef2f2; color: #dc2626; padding: 3px 10px; border-radius: 50px; font-size: 0.78rem; font-weight: 600; margin-top: 10px; }
 
-        /* ===== SOLUTION SECTION ===== */
-        .solution { padding: 90px 0; background: var(--green-light); }
-        .solution-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
-        .solution-image { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-lg); }
-        .solution-image img { width: 100%; height: 480px; object-fit: cover; }
-        .solution-list { margin-top: 24px; }
-        .solution-list li { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; font-size: 1.05rem; }
+        /* ===== SOLUTION ===== */
+        .solution { padding: 80px 0; background: #fff; }
+        .solution-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+        .solution-image { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+        .solution-image img { width: 100%; height: 420px; object-fit: cover; }
+        .solution-list { margin-top: 20px; }
+        .solution-list li { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; font-size: 1rem; color: #334155; }
         .solution-check {
-            width: 28px; height: 28px; background: var(--green); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; color: #fff;
-            font-weight: 700; flex-shrink: 0; font-size: 0.85rem;
+            width: 24px; height: 24px; background: var(--green-soft); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: var(--green);
+            font-weight: 700; flex-shrink: 0; font-size: 0.8rem; border: 1px solid var(--green-mid);
         }
 
         /* ===== PROCESS ===== */
-        .process { padding: 90px 0; background: #fff; }
-        .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 48px; }
-        .process-step { text-align: center; position: relative; }
+        .process { padding: 80px 0; }
+        .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 40px; }
+        .process-step { text-align: center; position: relative; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 16px; box-shadow: var(--shadow-sm); transition: all 0.25s; }
+        .process-step:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
         .process-num {
-            width: 64px; height: 64px; background: var(--green); color: #fff; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900;
-            margin: 0 auto 20px; position: relative; z-index: 2;
+            width: 44px; height: 44px; background: var(--green-soft); color: var(--green); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 800;
+            margin: 0 auto 16px; border: 2px solid var(--green-mid);
         }
-        .process-step::after {
-            content: ''; position: absolute; top: 32px; right: -50%; width: 100%; height: 2px;
-            background: #e2e8f0; z-index: 1;
-        }
-        .process-step:last-child::after { display: none; }
-        .process-step h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
-        .process-step p { font-size: 0.92rem; color: var(--gray); padding: 0 8px; }
+        .process-step h3 { font-size: 1.02rem; font-weight: 700; margin-bottom: 6px; }
+        .process-step p { font-size: 0.88rem; color: var(--gray); }
 
         /* ===== PRICING ===== */
-        .pricing { padding: 90px 0; background: var(--gray-light); }
-        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 48px; }
+        .pricing { padding: 80px 0; background: #fff; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
         .price-card {
-            background: #fff; border-radius: var(--radius); padding: 36px 28px;
-            box-shadow: var(--shadow); transition: transform 0.3s; position: relative;
-            border: 2px solid transparent;
+            background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 32px 24px;
+            box-shadow: var(--shadow-sm); transition: all 0.25s; position: relative;
         }
-        .price-card:hover { transform: translateY(-6px); }
-        .price-card.featured { border-color: var(--green); transform: scale(1.03); }
+        .price-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+        .price-card.featured { border-color: var(--green); border-width: 2px; }
         .price-card.featured::before {
-            content: 'ПОПУЛЯРНЫЙ'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-            background: var(--green); color: #fff; padding: 4px 16px; border-radius: 50px;
-            font-size: 0.75rem; font-weight: 700; letter-spacing: 1px;
+            content: 'ПОПУЛЯРНЫЙ'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+            background: var(--green); color: #fff; padding: 3px 14px; border-radius: 50px;
+            font-size: 0.72rem; font-weight: 700; letter-spacing: 1px;
         }
-        .price-card h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 8px; }
-        .price-card .price-desc { color: var(--gray); font-size: 0.9rem; margin-bottom: 20px; }
-        .price-amount { font-size: 2.4rem; font-weight: 900; color: var(--green); margin-bottom: 4px; }
-        .price-amount small { font-size: 1rem; color: var(--gray); font-weight: 400; }
-        .price-features { margin: 24px 0; }
-        .price-features li { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: 0.95rem; }
+        .price-card h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 6px; }
+        .price-card .price-desc { color: var(--gray); font-size: 0.88rem; margin-bottom: 16px; }
+        .price-amount { font-size: 2.1rem; font-weight: 800; color: var(--dark); margin-bottom: 4px; }
+        .price-amount small { font-size: 0.95rem; color: var(--gray); font-weight: 400; }
+        .price-features { margin: 20px 0; }
+        .price-features li { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 10px; font-size: 0.92rem; color: #334155; }
         .price-features li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
         .price-card .btn { width: 100%; }
 
         /* ===== ADVANTAGES ===== */
-        .advantages { padding: 90px 0; background: #fff; }
-        .adv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 48px; }
-        .adv-card { padding: 32px; border-radius: var(--radius); background: var(--gray-light); transition: all 0.3s; }
-        .adv-card:hover { background: var(--green-light); transform: translateY(-4px); }
-        .adv-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 20px; }
-        .adv-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; }
-        .adv-card p { color: var(--gray); font-size: 0.96rem; }
+        .advantages { padding: 80px 0; }
+        .adv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+        .adv-card { padding: 28px; border-radius: var(--radius); background: #fff; border: 1px solid var(--border); transition: all 0.25s; box-shadow: var(--shadow-sm); }
+        .adv-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+        .adv-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 16px; }
+        .adv-card h3 { font-size: 1.08rem; font-weight: 700; margin-bottom: 8px; }
+        .adv-card p { color: var(--gray); font-size: 0.93rem; }
 
-        /* ===== TEAM ===== */
-        .team { padding: 90px 0; background: var(--dark); color: #fff; }
-        .team .section-title { color: #fff; }
-        .team .section-label { color: #4ade80; }
-        .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 48px; }
+        /* ===== TEAM — light ===== */
+        .team { padding: 80px 0; background: #fff; }
+        .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
         .team-card {
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-            border-radius: var(--radius); padding: 32px; text-align: center; transition: all 0.3s;
+            background: var(--gray-light); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 28px; text-align: center; transition: all 0.25s;
         }
-        .team-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-4px); }
+        .team-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
         .team-avatar {
-            width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 16px;
-            display: flex; align-items: center; justify-content: center; font-size: 2rem;
+            width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 14px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 700;
             background: var(--green); color: #fff;
         }
-        .team-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
-        .team-role { color: #4ade80; font-size: 0.9rem; font-weight: 600; margin-bottom: 12px; }
-        .team-exp { font-size: 0.88rem; opacity: 0.7; }
+        .team-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 2px; color: var(--dark); }
+        .team-role { color: var(--green); font-size: 0.87rem; font-weight: 600; margin-bottom: 10px; }
+        .team-exp { font-size: 0.84rem; color: var(--gray); }
 
         /* ===== FAQ ===== */
-        .faq { padding: 90px 0; background: var(--gray-light); }
-        .faq-list { max-width: 780px; margin: 48px auto 0; }
+        .faq { padding: 80px 0; }
+        .faq-list { max-width: 740px; margin: 36px auto 0; }
         .faq-item {
-            background: #fff; border-radius: var(--radius); margin-bottom: 16px;
-            overflow: hidden; box-shadow: var(--shadow);
+            background: #fff; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 12px;
+            overflow: hidden; box-shadow: var(--shadow-sm);
         }
-        .faq-q { padding: 24px 28px; font-weight: 700; font-size: 1.05rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
-        .faq-q:hover { background: var(--green-light); }
-        .faq-q .faq-icon { transition: transform 0.3s; font-size: 1.4rem; color: var(--green); }
+        .faq-q { padding: 20px 24px; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; color: var(--dark); }
+        .faq-q:hover { background: var(--green-soft); }
+        .faq-q .faq-icon { transition: transform 0.3s; font-size: 1.3rem; color: var(--green); }
         .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-        .faq-a-inner { padding: 0 28px 24px; color: var(--gray); font-size: 0.98rem; }
+        .faq-a-inner { padding: 0 24px 20px; color: var(--gray); font-size: 0.95rem; }
         .faq-item.open .faq-a { max-height: 300px; }
         .faq-item.open .faq-icon { transform: rotate(45deg); }
 
-        /* ===== CTA FINAL ===== */
+        /* ===== CTA — soft ===== */
         .cta-final {
-            padding: 80px 0;
-            background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
-            color: #fff; text-align: center;
+            padding: 64px 0; background: var(--green-soft); text-align: center;
+            border-top: 1px solid var(--green-mid);
         }
-        .cta-final h2 { font-size: 2.4rem; font-weight: 900; margin-bottom: 16px; }
-        .cta-final p { font-size: 1.15rem; opacity: 0.9; margin-bottom: 32px; }
+        .cta-final h2 { font-size: 2rem; font-weight: 800; margin-bottom: 12px; color: var(--dark); }
+        .cta-final p { font-size: 1.1rem; color: var(--gray); margin-bottom: 28px; }
 
-        /* ===== FOOTER ===== */
-        .footer { background: var(--dark); color: rgba(255,255,255,0.7); padding: 48px 0 32px; }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 32px; }
-        .footer h4 { color: #fff; font-size: 1rem; font-weight: 700; margin-bottom: 16px; }
-        .footer a:hover { color: #fff; }
-        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; text-align: center; font-size: 0.85rem; }
-        .footer-contact li { margin-bottom: 8px; font-size: 0.92rem; }
+        /* ===== FOOTER — light ===== */
+        .footer { background: var(--gray-light); color: var(--gray); padding: 40px 0 28px; border-top: 1px solid var(--border); }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 36px; margin-bottom: 28px; }
+        .footer h4 { color: var(--dark); font-size: 0.95rem; font-weight: 700; margin-bottom: 14px; }
+        .footer a:hover { color: var(--green); }
+        .footer-bottom { border-top: 1px solid var(--border); padding-top: 20px; text-align: center; font-size: 0.82rem; }
+        .footer-contact li { margin-bottom: 6px; font-size: 0.88rem; }
 
-        /* ===== ANIMATIONS ===== */
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .hero-content { animation: fadeUp 0.8s ease; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .hero-inner > * { animation: fadeUp 0.6s ease; }
+        .hero-inner > *:nth-child(2) { animation-delay: 0.1s; }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 980px) {
-            .hero h1 { font-size: 2.2rem; }
+            .hero-inner { grid-template-columns: 1fr; }
+            .hero-visual { display: none; }
+            .hero h1 { font-size: 2rem; }
             .pain-grid, .pricing-grid, .adv-grid, .team-grid { grid-template-columns: 1fr 1fr; }
             .solution-wrap { grid-template-columns: 1fr; }
             .process-grid { grid-template-columns: 1fr 1fr; }
-            .process-step::after { display: none; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 640px) {
-            .hero { min-height: auto; padding: 60px 0; }
-            .hero h1 { font-size: 1.75rem; }
+            .hero { padding: 50px 0 40px; }
+            .hero h1 { font-size: 1.6rem; }
             .hero-text { font-size: 1rem; }
             .hero-buttons { flex-direction: column; }
             .hero-buttons .btn { width: 100%; }
-            .hero-stats { gap: 24px; }
-            .hero-stat-num { font-size: 1.6rem; }
-            .section-title { font-size: 1.6rem; }
+            .hero-stats { gap: 20px; }
+            .hero-stat-num { font-size: 1.4rem; }
+            .section-title { font-size: 1.5rem; }
             .pain-grid, .pricing-grid, .adv-grid, .team-grid, .process-grid, .footer-grid { grid-template-columns: 1fr; }
-            .price-card.featured { transform: none; }
-            .cta-final h2 { font-size: 1.7rem; }
-            .hero-buttons { gap: 12px; }
+            .price-card.featured { border-width: 1px; }
+            .cta-final h2 { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
-<!-- ===== HERO ===== -->
+<!-- HERO -->
 <section class="hero">
     <div class="container">
-        <div class="hero-content">
-            <div class="hero-badge">
-                <span>✅</span> Эксперты с опытом работы в Роспотребнадзоре
+        <div class="hero-inner">
+            <div>
+                <div class="hero-badge">
+                    <span>✅</span> Эксперты с опытом работы в Роспотребнадзоре
+                </div>
+                <h1>Разработка <span>ХАССП</span> для общепита под ключ</h1>
+                <p class="hero-text">
+                    Документация, которая проходит любые проверки с первого раза.
+                    Защитите свой бизнес от штрафов и приостановки деятельности.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary">Получить расчёт →</a>
+                    <a href="#process" class="btn btn-outline">Как мы работаем</a>
+                </div>
+                <div class="hero-stats">
+                    <div>
+                        <div class="hero-stat-num">100%</div>
+                        <div class="hero-stat-label">проходимость проверок</div>
+                    </div>
+                    <div>
+                        <div class="hero-stat-num">18+</div>
+                        <div class="hero-stat-label">лет опыта</div>
+                    </div>
+                    <div>
+                        <div class="hero-stat-num">от 3 дн.</div>
+                        <div class="hero-stat-label">срок разработки</div>
+                    </div>
+                </div>
             </div>
-            <h1>Разработка <span>ХАССП</span> для общепита под ключ</h1>
-            <p class="hero-text">
-                Документация, которая проходит любые проверки с первого раза.
-                Защитите свой бизнес от штрафов и приостановки деятельности.
-            </p>
-            <div class="hero-buttons">
-                <a href="#contact" class="btn btn-primary">Получить расчёт →</a>
-                <a href="#process" class="btn btn-outline">Как мы работаем</a>
-            </div>
-            <div class="hero-stats">
-                <div>
-                    <div class="hero-stat-num">100%</div>
-                    <div class="hero-stat-label">проходимость проверок</div>
-                </div>
-                <div>
-                    <div class="hero-stat-num">18+</div>
-                    <div class="hero-stat-label">лет опыта в санэпиднадзоре</div>
-                </div>
-                <div>
-                    <div class="hero-stat-num">от 3 дн.</div>
-                    <div class="hero-stat-label">срок разработки</div>
-                </div>
+            <div class="hero-visual">
+                <img src="img/hero.webp" alt="Профессиональная кухня ресторана" loading="eager">
             </div>
         </div>
     </div>
 </section>
 
-<!-- ===== TRUST BAR ===== -->
+<!-- TRUST BAR -->
 <section class="trust-bar">
     <div class="container">
         <div class="trust-items">
-            <div class="trust-item"><span class="trust-icon">📋</span> Соответствие ТР ТС 021/2011</div>
+            <div class="trust-item"><span class="trust-icon">📋</span> ТР ТС 021/2011</div>
             <div class="trust-item"><span class="trust-icon">🏛️</span> Эксперты из Роспотребнадзора</div>
-            <div class="trust-item"><span class="trust-icon">⚡</span> Срочное оформление за 3 дня</div>
+            <div class="trust-item"><span class="trust-icon">⚡</span> Срочно за 3 дня</div>
             <div class="trust-item"><span class="trust-icon">🛡️</span> Сопровождение на проверках</div>
         </div>
     </div>
 </section>
 
-<!-- ===== PAIN ===== -->
+<!-- PAIN -->
 <section class="pain" id="pain">
     <div class="container text-center">
         <span class="section-label">Чем рискуете</span>
@@ -303,45 +308,45 @@
             <div class="pain-card">
                 <div class="pain-card-icon">💰</div>
                 <h3>Штрафы до 600 000 ₽</h3>
-                <p>По ст. 14.43 КоАП РФ за нарушение требований технических регламентов. При повторном нарушении — до 1 млн ₽.</p>
+                <p>По ст. 14.43 КоАП РФ за нарушение требований технических регламентов. При повторном — до 1 млн ₽.</p>
                 <span class="pain-card-tag">ст. 14.43 КоАП РФ</span>
             </div>
             <div class="pain-card">
                 <div class="pain-card-icon">🚫</div>
                 <h3>Приостановка деятельности</h3>
-                <p>Сроком до 90 суток. За это время вы теряете выручку, клиентов и репутацию на рынке.</p>
+                <p>Сроком до 90 суток. Теряете выручку, клиентов и репутацию на рынке.</p>
                 <span class="pain-card-tag">до 90 суток</span>
             </div>
             <div class="pain-card">
                 <div class="pain-card-icon">📉</div>
                 <h3>Конфискация продукции</h3>
-                <p>Вся партия продукции может быть конфискована. Плюс расходы на устранение нарушений и повторные проверки.</p>
-                <span class="pain-card-tag">плюс репутационные потери</span>
+                <p>Вся партия может быть конфискована. Плюс расходы на устранение нарушений.</p>
+                <span class="pain-card-tag">репутационные потери</span>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ===== SOLUTION ===== -->
+<!-- SOLUTION -->
 <section class="solution" id="solution">
     <div class="container">
         <div class="solution-wrap">
             <div>
                 <span class="section-label">Решение</span>
                 <h2 class="section-title" style="text-align:left;">ХАССП под ключ — от анализа до внедрения</h2>
-                <p style="font-size:1.1rem; color:var(--gray); margin-bottom:20px;">
-                    Мы разрабатываем完整ную документацию по системе ХАССП (HACCP) специально для вашего предприятия.
-                    Вы получаете не шаблон, а рабочую систему, построенную под вашу кухню, ваше меню и ваши процессы.
+                <p style="font-size:1.05rem; color:var(--gray); margin-bottom:18px;">
+                    Мы разрабатываем полную документацию по системе ХАССП специально для вашего предприятия.
+                    Вы получаете не шаблон, а рабочую систему под вашу кухню, ваше меню и ваши процессы.
                 </p>
                 <ul class="solution-list">
                     <li><span class="solution-check">✓</span> Анализ производства и выявление критических контрольных точек</li>
-                    <li><span class="solution-check">✓</span> Разработка всей документации: планы, журналы, инструкции, схемы</li>
+                    <li><span class="solution-check">✓</span> Разработка всей документации: планы, журналы, инструкции</li>
                     <li><span class="solution-check">✓</span> Обучение персонала работе по системе ХАССП</li>
                     <li><span class="solution-check">✓</span> Подготовка к проверке Роспотребнадзора</li>
                     <li><span class="solution-check">✓</span> Сопровождение во время проверок и после</li>
                     <li><span class="solution-check">✓</span> Внесение изменений при смене меню или процессов</li>
                 </ul>
-                <a href="#contact" class="btn btn-primary" style="margin-top:28px;">Заказать разработку →</a>
+                <a href="#contact" class="btn btn-primary" style="margin-top:24px;">Заказать разработку →</a>
             </div>
             <div class="solution-image">
                 <img src="img/kitchen.webp" alt="Ресторанная кухня — соблюдение санитарных норм" loading="lazy">
@@ -350,43 +355,43 @@
     </div>
 </section>
 
-<!-- ===== PROCESS ===== -->
+<!-- PROCESS -->
 <section class="process" id="process">
     <div class="container text-center">
         <span class="section-label">Этапы работы</span>
         <h2 class="section-title">Как мы работаем</h2>
-        <p class="section-subtitle">Прозрачный процесс — вы всегда знаете, на каком этапе находится ваш проект</p>
+        <p class="section-subtitle">Прозрачный процесс — вы всегда знаете, на каком этапе ваш проект</p>
         <div class="process-grid">
             <div class="process-step">
                 <div class="process-num">1</div>
                 <h3>Заявка и аудит</h3>
-                <p>Изучаем ваше предприятие: тип кухни, меню, количество точек, штат. Определяем объём работ.</p>
+                <p>Изучаем предприятие: кухня, меню, штат, точки. Определяем объём работ.</p>
             </div>
             <div class="process-step">
                 <div class="process-num">2</div>
                 <h3>Разработка</h3>
-                <p>Готовим полную документацию ХАССП: анализ рисков, ККТ, планы, журналы, рабочие инструкции.</p>
+                <p>Готовим документацию: анализ рисков, ККТ, планы, журналы, инструкции.</p>
             </div>
             <div class="process-step">
                 <div class="process-num">3</div>
                 <h3>Внедрение</h3>
-                <p>Обучаем персонал, помогаем внедрить систему в ежедневную работу кухни.</p>
+                <p>Обучаем персонал, помогаем внедрить систему в ежедневную работу.</p>
             </div>
             <div class="process-step">
                 <div class="process-num">4</div>
                 <h3>Сопровождение</h3>
-                <p>Готовим к проверкам, консультируем, корректируем документы при изменениях.</p>
+                <p>Готовим к проверкам, консультируем, корректируем документы.</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ===== PRICING ===== -->
+<!-- PRICING -->
 <section class="pricing" id="pricing">
     <div class="container text-center">
         <span class="section-label">Стоимость</span>
         <h2 class="section-title">Прозрачные тарифы</h2>
-        <p class="section-subtitle">Выберите подходящий вариант. Финальная стоимость зависит от типа и размера предприятия — уточняйте при заказе.</p>
+        <p class="section-subtitle">Финальная стоимость зависит от типа и размера предприятия — уточняйте при заказе</p>
         <div class="pricing-grid">
             <div class="price-card">
                 <h3>Базовый</h3>
@@ -399,7 +404,7 @@
                     <li>Консультация по внедрению</li>
                     <li>Срок: 5–7 рабочих дней</li>
                 </ul>
-                <a href="#contact" class="btn btn-orange">Выбрать</a>
+                <a href="#contact" class="btn btn-outline">Выбрать</a>
             </div>
             <div class="price-card featured">
                 <h3>Под ключ</h3>
@@ -427,59 +432,59 @@
                     <li>Сопровождение 12 месяцев</li>
                     <li>Приоритетная поддержка 24/7</li>
                 </ul>
-                <a href="#contact" class="btn btn-orange">Выбрать</a>
+                <a href="#contact" class="btn btn-outline">Выбрать</a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ===== ADVANTAGES ===== -->
+<!-- ADVANTAGES -->
 <section class="advantages" id="advantages">
     <div class="container text-center">
         <span class="section-label">Почему мы</span>
         <h2 class="section-title">Эксперты, которые знают систему изнутри</h2>
-        <p class="section-subtitle">Мы не консультанты, которые выучили ХАССП по учебникам. Мы — бывшие сотрудники Роспотребнадзора с 18+ годами практики.</p>
+        <p class="section-subtitle">Мы не консультанты по учебникам. Мы — бывшие сотрудники Роспотребнадзора с 18+ годами практики.</p>
         <div class="adv-grid">
             <div class="adv-card">
-                <div class="adv-icon" style="background:#dcfce7;">🏛️</div>
+                <div class="adv-icon" style="background:var(--green-soft);">🏛️</div>
                 <h3>Знаем, что ищут проверяющие</h3>
-                <p>14–18 лет работы в системе Роспотребнадзора. Мы проводили проверки сами — и знаем, на что обращают внимание инспекторы.</p>
+                <p>14–18 лет в системе Роспотребнадзора. Мы проводили проверки сами — знаем, на что смотрят инспекторы.</p>
             </div>
             <div class="adv-card">
-                <div class="adv-icon" style="background:#fef3c7;">⚡</div>
+                <div class="adv-icon" style="background:var(--orange-soft);">⚡</div>
                 <h3>Документы с первого раза</h3>
-                <p>Наша документация не требует доработок после проверки. Мы сразу делаем правильно — опыт не позволяет ошибаться.</p>
+                <p>Наша документация не требует доработок после проверки. Сразу делаем правильно.</p>
             </div>
             <div class="adv-card">
-                <div class="adv-icon" style="background:#e0e7ff;">🎯</div>
+                <div class="adv-icon" style="background:var(--blue-soft);">🎯</div>
                 <h3>Индивидуальный подход</h3>
-                <p>Не шаблоны. Каждое предприятие уникально — меню, кухня, процессы. Разрабатываем под вас, а не «скачиваем из интернета».</p>
+                <p>Не шаблоны. Каждое предприятие уникально — меню, кухня, процессы. Делаем под вас.</p>
             </div>
             <div class="adv-card">
                 <div class="adv-icon" style="background:#fce7f3;">🤝</div>
                 <h3>Сопровождение после сдачи</h3>
-                <p>Не сдали документы и пропали. Помогаем внедрить, обучаем Staff, готовим к проверкам и остаёмся на связи.</p>
+                <p>Не сдали документы и пропали. Внедряем, обучаем, готовим к проверкам, остаёмся на связи.</p>
             </div>
             <div class="adv-card">
-                <div class="adv-icon" style="background:#d1fae5;">📜</div>
+                <div class="adv-icon" style="background:var(--green-soft);">📜</div>
                 <h3>Соответствие законодательству</h3>
-                <p>ТР ТС 021/2011, СанПиН, ФЗ №29 «О качестве и безопасности пищевых продуктов». Все актуальные требования — в одном пакете.</p>
+                <p>ТР ТС 021/2011, СанПиН, ФЗ №29. Все актуальные требования — в одном пакете.</p>
             </div>
             <div class="adv-card">
-                <div class="adv-icon" style="background:#fed7aa;">🌍</div>
-                <h3>Работаем по Дальнему Востоку</h3>
-                <p>Благовещенск, Амурская область и весь ДВФО. Возможен выезд на предприятие для аудита и обучения.</p>
+                <div class="adv-icon" style="background:var(--orange-soft);">🌍</div>
+                <h3>Работаем по ДВФО</h3>
+                <p>Благовещенск, Амурская область и весь Дальний Восток. Выезд или удалённая работа.</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ===== TEAM ===== -->
+<!-- TEAM -->
 <section class="team" id="team">
     <div class="container text-center">
         <span class="section-label">Наша команда</span>
         <h2 class="section-title">Кто будет работать с вами</h2>
-        <p class="section-subtitle" style="opacity:0.7;">Профессионалы с многолетним опытом в системе санитарно-эпидемиологического надзора</p>
+        <p class="section-subtitle">Профессионалы с многолетним опытом в санэпиднадзоре</p>
         <div class="team-grid">
             <div class="team-card">
                 <div class="team-avatar">ПЯ</div>
@@ -497,13 +502,13 @@
                 <div class="team-avatar">УО</div>
                 <h3>Оксана Украинская</h3>
                 <div class="team-role">Главный эксперт</div>
-                <p class="team-exp">Врач по общей гигиене<br>18 лет стажа · 10+ лет в экспертизе Центра гигиены и эпидемиологии</p>
+                <p class="team-exp">Врач по общей гигиене<br>18 лет стажа · 10+ лет в экспертизе</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ===== FAQ ===== -->
+<!-- FAQ -->
 <section class="faq" id="faq">
     <div class="container text-center">
         <span class="section-label">Вопросы и ответы</span>
@@ -511,81 +516,76 @@
         <div class="faq-list">
             <div class="faq-item">
                 <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-                    Что такое ХАССП и кому он нужен?
-                    <span class="faq-icon">+</span>
+                    Что такое ХАССП и кому он нужен? <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-a"><div class="faq-a-inner">
-                    ХАССП (HACCP) — система безопасности пищевых продуктов. Обязательна для всех предприятий пищевой отрасли согласно ТР ТС 021/2011: рестораны, кафе, столовые, доставка еды, продуктовые магазины, пищевые производства. Без внедрённой ХАССП — штраф или приостановка деятельности.
+                    ХАССП (HACCP) — система безопасности пищевых продуктов. Обязательна для всех предприятий пищевой отрасли согласно ТР ТС 021/2011: рестораны, кафе, столовые, доставка, магазины, производства. Без ХАССП — штраф или приостановка.
                 </div></div>
             </div>
             <div class="faq-item">
                 <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-                    Сколько времени занимает разработка?
-                    <span class="faq-icon">+</span>
+                    Сколько времени занимает разработка? <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-a"><div class="faq-a-inner">
-                    Стандартный срок — 5–7 рабочих дней для небольшого предприятия. Для крупных объектов и сетей — 2–3 недели. Возможна срочная разработка за 3 дня (с наценкой по тарифу).
+                    Стандартный срок — 5–7 рабочих дней. Для крупных объектов — 2–3 недели. Срочная разработка за 3 дня возможна.
                 </div></div>
             </div>
             <div class="faq-item">
                 <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-                    Вы выдаёте сертификат ХАССП?
-                    <span class="faq-icon">+</span>
+                    Вы выдаёте сертификат ХАССП? <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-a"><div class="faq-a-inner">
-                    ХАССП не сертифицируется — это внедряемая система, а не документ. Мы разрабатываем пакет документов, помогаем внедрить систему в работу и подготовить предприятие к проверке Роспотребнадзора. При необходимости поможем с добровольной сертификацией.
+                    ХАССП не сертифицируется — это внедряемая система. Мы разрабатываем документы, внедряем и готовим к проверке. При необходимости поможем с добровольной сертификацией.
                 </div></div>
             </div>
             <div class="faq-item">
                 <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-                    Что будет, если Роспотребнадзор найдёт нарушения?
-                    <span class="faq-icon">+</span>
+                    Что если Роспотребнадзор найдёт нарушения? <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-a"><div class="faq-a-inner">
-                    С нашей документацией — практически нулевой риск. Но если проверяющий всё же укажет на недочёты, мы бесплатно доработаем документы и проконсультируем по устранению замечаний. Мы сопровождаем клиентов после сдачи проекта.
+                    С нашей документацией — практически нулевой риск. Но если возникнут замечания, бесплатно доработаем и проконсультируем.
                 </div></div>
             </div>
             <div class="faq-item">
                 <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-                    Вы работаете только в Благовещенске?
-                    <span class="faq-icon">+</span>
+                    Работаете только в Благовещенске? <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-a"><div class="faq-a-inner">
-                    Основной офис в Благовещенске. Работаем по всему Дальневосточному федеральному округу. Для удалённых объектов возможна разработка без выезда (по предоставленным материалам) или с выездом специалиста.
+                    Основной офис в Благовещенске. Работаем по всему ДВФО. Возможен выезд или удалённая разработка.
                 </div></div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ===== CTA FINAL ===== -->
+<!-- CTA -->
 <section class="cta-final" id="contact">
     <div class="container">
         <h2>Готовы защитить свой бизнес?</h2>
-        <p>Получите бесплатную консультацию и расчёт стоимости ХАССП для вашего предприятия</p>
-        <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+        <p>Бесплатная консультация и расчёт стоимости ХАССП для вашего предприятия</p>
+        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
             <a href="tel:+79000000000" class="btn btn-orange">📞 Позвонить</a>
-            <a href="https://t.me/dveb_amur" class="btn" style="background:#fff; color:var(--green-dark);">💬 Написать в Telegram</a>
+            <a href="https://t.me/dveb_amur" class="btn btn-outline">💬 Telegram</a>
         </div>
     </div>
 </section>
 
-<!-- ===== FOOTER ===== -->
+<!-- FOOTER -->
 <footer class="footer">
     <div class="container">
         <div class="footer-grid">
             <div>
                 <h4>ООО «Дальневосточное бюро экспертиз»</h4>
-                <p style="margin-bottom:12px; font-size:0.92rem;">Орган инспекции. Эксперты с опытом работы в Роспотребнадзоре. Разработка ХАССП, санитарно-эпидемиологические экспертизы, сопровождение бизнеса.</p>
-                <p style="font-size:0.88rem; opacity:0.6;">675004, Амурская область, г. Благовещенск,<br>ул. Шевченко, д. 7, офис № 307</p>
+                <p style="margin-bottom:10px; font-size:0.88rem;">Орган инспекции. Эксперты из Роспотребнадзора. Разработка ХАССП, санитарно-эпидемиологические экспертизы, сопровождение бизнеса.</p>
+                <p style="font-size:0.84rem; opacity:0.7;">675004, Амурская область, г. Благовещенск, ул. Шевченко, д. 7, офис 307</p>
             </div>
             <div>
                 <h4>Услуги</h4>
                 <ul>
-                    <li style="margin-bottom:8px;"><a href="#">Разработка ХАССП</a></li>
-                    <li style="margin-bottom:8px;"><a href="#">Санэпидэкспертизы</a></li>
-                    <li style="margin-bottom:8px;"><a href="#">Сопровождение бизнеса</a></li>
-                    <li style="margin-bottom:8px;"><a href="#">Защита прав потребителей</a></li>
+                    <li style="margin-bottom:6px;"><a href="#">Разработка ХАССП</a></li>
+                    <li style="margin-bottom:6px;"><a href="#">Санэпидэкспертизы</a></li>
+                    <li style="margin-bottom:6px;"><a href="#">Сопровождение бизнеса</a></li>
+                    <li style="margin-bottom:6px;"><a href="#">Защита прав потребителей</a></li>
                 </ul>
             </div>
             <div>
@@ -604,7 +604,6 @@
 </footer>
 
 <script>
-    // FAQ accordion
     document.querySelectorAll('.faq-q').forEach(q => {
         q.addEventListener('click', () => {
             const item = q.parentElement;
@@ -614,7 +613,6 @@
         });
     });
 
-    // Smooth reveal on scroll
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -626,8 +624,8 @@
 
     document.querySelectorAll('.pain-card, .price-card, .adv-card, .team-card, .process-step').forEach(el => {
         el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
         observer.observe(el);
     });
 </script>
