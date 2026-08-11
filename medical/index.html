@@ -808,6 +808,8 @@
             if (!isOpen) item.classList.add('open');
         });
     });
+    // Убираем inline onclick — он конфликтует с этим обработчиком
+    document.querySelectorAll('.faq-q[onclick]').forEach(q => q.removeAttribute('onclick'));
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
