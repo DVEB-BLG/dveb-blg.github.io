@@ -654,7 +654,7 @@
         <h2 class="section-title">Часто задаваемые вопросы</h2>
         <div class="faq-list">
             <div class="faq-item">
-                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                <div class="faq-q">
                     Что входит в сопровождение медицинских организаций? <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-a"><div class="faq-a-inner">
@@ -662,7 +662,7 @@
                 </div></div>
             </div>
             <div class="faq-item">
-                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                <div class="faq-q">
                     Помогаете получить лицензию Минздрава? <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-a"><div class="faq-a-inner">
@@ -670,7 +670,7 @@
                 </div></div>
             </div>
             <div class="faq-item">
-                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                <div class="faq-q">
                     Сколько времени занимает работа? <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-a"><div class="faq-a-inner">
@@ -678,7 +678,7 @@
                 </div></div>
             </div>
             <div class="faq-item">
-                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                <div class="faq-q">
                     Что если Роспотребнадзор найдёт нарушения? <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-a"><div class="faq-a-inner">
@@ -686,7 +686,7 @@
                 </div></div>
             </div>
             <div class="faq-item">
-                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                <div class="faq-q">
                     Действительно ли вы вернёте деньги? <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-a"><div class="faq-a-inner">
@@ -694,7 +694,7 @@
                 </div></div>
             </div>
             <div class="faq-item">
-                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                <div class="faq-q">
                     Работаете только в Благовещенске? <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-a"><div class="faq-a-inner">
@@ -702,7 +702,7 @@
                 </div></div>
             </div>
             <div class="faq-item">
-                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                <div class="faq-q">
                     Нужен ли нам производственный контроль? <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-a"><div class="faq-a-inner">
@@ -710,7 +710,7 @@
                 </div></div>
             </div>
             <div class="faq-item">
-                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                <div class="faq-q">
                     Какие документы нужны для получения санэпидзаключения? <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-a"><div class="faq-a-inner">
@@ -718,7 +718,7 @@
                 </div></div>
             </div>
             <div class="faq-item">
-                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                <div class="faq-q">
                     Сколько действует санитарно-эпидемиологическое заключение? <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-a"><div class="faq-a-inner">
@@ -726,7 +726,7 @@
                 </div></div>
             </div>
             <div class="faq-item">
-                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                <div class="faq-q">
                     Что делать, если пришла внеплановая проверка? <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-a"><div class="faq-a-inner">
@@ -734,7 +734,7 @@
                 </div></div>
             </div>
             <div class="faq-item">
-                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                <div class="faq-q">
                     Помогаете с обращением медицинских отходов? <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-a"><div class="faq-a-inner">
@@ -742,7 +742,7 @@
                 </div></div>
             </div>
             <div class="faq-item">
-                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                <div class="faq-q">
                     Проводите обучение персонала? <span class="faq-icon">+</span>
                 </div>
                 <div class="faq-a"><div class="faq-a-inner">
@@ -808,8 +808,6 @@
             if (!isOpen) item.classList.add('open');
         });
     });
-    // Убираем inline onclick — он конфликтует с этим обработчиком
-    document.querySelectorAll('.faq-q[onclick]').forEach(q => q.removeAttribute('onclick'));
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
