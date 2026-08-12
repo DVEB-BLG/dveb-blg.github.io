@@ -5,6 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Сопровождение медицинских организаций — санэпидзаключение, лицензия Минздрава, Роспотребнадзор — ДВЭБ, Благовещенск</title>
     <meta name="description" content="Комплексное сопровождение медицинских организаций: получение санитарно-эпидемиологических заключений, согласований Роспотребнадзора, помощь в лицензировании Минздрава. Эксперты с опытом работы в Роспотребнадзоре. Благовещенск и Дальний Восток.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    <link rel="mask-icon" href="favicon.svg" color="#1d4ed8">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://двэб.рф/medical/">
+    <meta property="og:title" content="Сопровождение медицинских организаций — ДВЭБ, Благовещенск">
+    <meta property="og:description" content="Комплексное сопровождение медорганизаций: санэпидзаключения, лицензирование, подготовка к проверкам. Эксперты с 18-летним опытом. Благовещенск и ДФО.">
+    <meta property="og:image" content="https://двэб.рф/medical/img/hero.webp">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:site_name" content="ДВЭБ — Дальневосточное бюро экспертиз">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Сопровождение медицинских организаций — ДВЭБ, Благовещенск">
+    <meta name="twitter:description" content="Комплексное сопровождение медорганизаций: санэпидзаключения, лицензирование, подготовка к проверкам. Эксперты с 18-летним опытом. Благовещенск и ДФО.">
+    <meta name="twitter:image" content="https://двэб.рф/medical/img/hero.webp">
+
+    <!-- Theme color -->
+    <meta name="theme-color" content="#1d4ed8">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://двэб.рф/medical/">
+
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; font-size: 16px; }
@@ -244,30 +273,191 @@
         .hero-inner > * { animation: fadeUp 0.6s ease; }
         .hero-inner > *:nth-child(2) { animation-delay: 0.1s; }
 
+        /* ===== TABLET LANDSCAPE (≤1024px) ===== */
+        @media (max-width: 1024px) {
+            .container { padding: 0 24px; }
+            .hero h1 { font-size: 2.3rem; }
+            .hero-stat-num { font-size: 1.6rem; }
+            .team-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+
+        /* ===== TABLET PORTRAIT (≤980px) ===== */
         @media (max-width: 980px) {
             .hero-inner { grid-template-columns: 1fr; }
             .hero-visual { display: none; }
             .hero h1 { font-size: 2rem; }
-            .pain-grid, .adv-grid, .team-grid { grid-template-columns: 1fr 1fr; }
+            .hero { padding: 56px 0 48px; }
+            .pain-grid, .adv-grid { grid-template-columns: 1fr 1fr; }
             .assessment-grid { grid-template-columns: 1fr 1fr; }
             .solution-wrap { grid-template-columns: 1fr; }
+            .solution-image { order: -1; }
+            .solution-image img { height: 300px; }
             .process-grid { grid-template-columns: 1fr 1fr; }
             .deliverables-grid { grid-template-columns: 1fr; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
+            .section-title { font-size: 1.8rem; }
+            .guarantee { padding: 28px 20px; }
         }
-        @media (max-width: 640px) {
-            .hero { padding: 50px 0 40px; }
-            .hero h1 { font-size: 1.6rem; }
+
+        /* ===== LARGE MOBILE / SMALL TABLET (≤768px) ===== */
+        @media (max-width: 768px) {
+            .container { padding: 0 18px; }
+            .hero { padding: 48px 0 40px; }
+            .hero h1 { font-size: 1.75rem; }
             .hero-text { font-size: 1rem; }
-            .hero-buttons { flex-direction: column; }
-            .hero-buttons .btn { width: 100%; }
-            .hero-stats { gap: 20px; }
-            .hero-stat-num { font-size: 1.4rem; }
-            .section-title { font-size: 1.5rem; }
+            .hero-badge { font-size: 0.8rem; padding: 6px 14px; }
+            .hero-stats { gap: 18px; }
+            .hero-stat-num { font-size: 1.45rem; }
+            .hero-stat-label { font-size: 0.78rem; }
+            .section-title { font-size: 1.55rem; }
+            .section-subtitle { font-size: 0.95rem; }
+            .section-label { font-size: 0.76rem; }
+            .pain { padding: 56px 0; }
+            .solution { padding: 56px 0; }
+            .assessment { padding: 56px 0; }
+            .process { padding: 56px 0; }
+            .deliverables { padding: 56px 0; }
+            .advantages { padding: 56px 0; }
+            .team { padding: 56px 0; }
+            .faq { padding: 56px 0; }
+            .pain-grid { grid-template-columns: 1fr; }
+            .pain-card { padding: 22px; }
+            .adv-grid { grid-template-columns: 1fr; }
+            .adv-card { padding: 22px; }
+            .assessment-grid { grid-template-columns: 1fr; }
+            .assessment-item { padding: 14px 16px; }
+            .process-grid { grid-template-columns: 1fr 1fr; }
+            .process-step { padding: 22px 12px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+            .cta-final { padding: 48px 0; }
+            .cta-final h2 { font-size: 1.65rem; }
+            .cta-final p { font-size: 1rem; }
+            .guarantee { padding: 24px 16px; }
+            .guarantee h3 { font-size: 1.15rem; }
+            .faq-list { margin-top: 28px; }
+            .faq-q { padding: 16px 18px; font-size: 0.93rem; }
+            .faq-a-inner { padding: 0 18px 16px; font-size: 0.88rem; }
+            .trust-items { gap: 12px; }
+            .trust-item { font-size: 0.82rem; }
+            .trust-icon { font-size: 1.1rem; }
+            .btn { padding: 13px 28px; font-size: 0.95rem; }
+        }
+
+        /* ===== MOBILE (≤640px) ===== */
+        @media (max-width: 640px) {
+            .container { padding: 0 16px; }
+            .hero { padding: 40px 0 36px; }
+            .hero h1 { font-size: 1.5rem; line-height: 1.2; }
+            .hero-text { font-size: 0.95rem; }
+            .hero-buttons { flex-direction: column; width: 100%; }
+            .hero-buttons .btn { width: 100%; padding: 14px 20px; font-size: 1rem; min-height: 52px; }
+            .hero-stats { gap: 16px 24px; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; }
+            .hero-stat-num { font-size: 1.3rem; }
+            .hero-stat-label { font-size: 0.75rem; }
+            .section-title { font-size: 1.35rem; }
+            .section-subtitle { font-size: 0.9rem; }
             .pain-grid, .adv-grid, .team-grid, .process-grid, .footer-grid, .assessment-grid { grid-template-columns: 1fr; }
-            .cta-final h2 { font-size: 1.5rem; }
+            .team-grid { grid-template-columns: 1fr !important; }
+            .team-card { padding: 22px; }
+            .cta-final h2 { font-size: 1.4rem; }
+            .cta-final .btn { width: 100%; min-height: 52px; }
+            .cta-final div[style*="flex"] { flex-direction: column; width: 100%; }
+            .pain-card { padding: 20px; }
+            .pain-card-icon { font-size: 1.7rem; }
+            .pain-card h3 { font-size: 1.05rem; }
+            .deliverable-card { padding: 22px; }
+            .guarantee { padding: 22px 14px; }
+            .guarantee-icon { font-size: 2rem; }
+            .guarantee h3 { font-size: 1.1rem; }
+            .guarantee p { font-size: 0.9rem; }
+            .footer-bottom { font-size: 0.76rem; padding: 16px; }
+            .trust-bar { padding: 18px 0; }
+            .trust-items { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .trust-item { font-size: 0.8rem; }
+        }
+
+        /* ===== SMALL MOBILE (≤380px) ===== */
+        @media (max-width: 380px) {
+            .hero h1 { font-size: 1.3rem; }
+            .hero-badge { font-size: 0.74rem; }
+            .section-title { font-size: 1.2rem; }
+            .btn { padding: 12px 18px; font-size: 0.9rem; }
+            .hero-stat-num { font-size: 1.15rem; }
+            .hero-stat-label { font-size: 0.7rem; }
+            .faq-q { font-size: 0.85rem; padding: 14px; }
+            .faq-a-inner { font-size: 0.82rem; padding: 0 14px 14px; }
+            .container { padding: 0 12px; }
         }
     </style>
+    <!-- Schema.org: Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MedicalOrganization",
+      "name": "ООО «Дальневосточное бюро экспертиз»",
+      "alternateName": "ДВЭБ",
+      "description": "Комплексное сопровождение медицинских организаций: санитарно-эпидемиологические заключения, лицензирование, подготовка к проверкам.",
+      "url": "https://двэб.рф/medical/",
+      "logo": "https://двэб.рф/medical/favicon.svg",
+      "image": "https://двэб.рф/medical/img/hero.webp",
+      "telephone": "+7-914-389-69-69",
+      "email": "office@двэб.рф",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "ул. Шевченко, д. 7, офис 307",
+        "addressLocality": "Благовещенск",
+        "addressRegion": "Амурская область",
+        "postalCode": "675004",
+        "addressCountry": "RU"
+      },
+      "areaServed": {
+        "@type": "Place",
+        "name": "Дальневосточный федеральный округ, Россия"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+        "opens": "09:00",
+        "closes": "18:00"
+      },
+      "priceRange": "$$"
+    }
+    </script>
+
+    <!-- Schema.org: FAQ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"Помогаете ли выбрать помещение под медицинский центр?","acceptedAnswer":{"@type":"Answer","text":"Конечно. Частая и интересная задача создания медицинских центров с нуля. Анализируем на соответствие всем требованиям санитарных правил, оцениваем площади помещений и моделируем работу."}},
+        {"@type":"Question","name":"Что входит в сопровождение медицинских организаций?","acceptedAnswer":{"@type":"Answer","text":"Полный комплекс: получение санитарно-эпидемиологических заключений и согласований Роспотребнадзора, комплексная оценка соответствия требованиям, помощь в лицензировании Минздрава, подготовка к проверкам, представительство в спорах, обучение персонала."}},
+        {"@type":"Question","name":"Помогаете получить лицензию Минздрава?","acceptedAnswer":{"@type":"Answer","text":"Да. Мы сопровождаем медицинские организации на всех этапах лицензирования: оцениваем соответствие помещения и оборудования требованиям, помогаем подготовить пакет документов, консультируем по всем вопросам."}},
+        {"@type":"Question","name":"Сколько времени занимает работа?","acceptedAnswer":{"@type":"Answer","text":"Срок зависит от структуры учреждения, вида деятельности, сложности и объёмов работ. После первичного аудита мы называем точные сроки."}},
+        {"@type":"Question","name":"Что если Роспотребнадзор найдёт нарушения?","acceptedAnswer":{"@type":"Answer","text":"Наша задача — предупредить нарушения до проверки. Мы проводим аудит, выявляем риски и даём пошаговый план устранения. Если проверка уже идёт — профессионально сопровождаем и представляем интересы."}},
+        {"@type":"Question","name":"Действительно ли вы вернёте деньги?","acceptedAnswer":{"@type":"Answer","text":"Да. Если после ознакомления с отчётом о результатах проведённой оценки вы откажетесь от услуги и посчитаете её обоснованно ненужной — мы вернём деньги."}},
+        {"@type":"Question","name":"Работаете только в Благовещенске?","acceptedAnswer":{"@type":"Answer","text":"Основной офис в Благовещенске. Работаем по ДФО и всей России. Возможен выезд или удалённая работа."}},
+        {"@type":"Question","name":"Нужен ли нам производственный контроль?","acceptedAnswer":{"@type":"Answer","text":"Да, производственный контроль обязателен для медицинских организаций. Мы разработаем программу, поможем с выбором лаборатории и проконтролируем регулярность исследований."}},
+        {"@type":"Question","name":"Какие документы нужны для получения санэпидзаключения?","acceptedAnswer":{"@type":"Answer","text":"Перечень зависит от вида медицинской деятельности. Базово: учредительные документы, свидетельство на помещение, договоры аренды, проектные материалы, результаты лабораторных исследований."}},
+        {"@type":"Question","name":"Сколько действует санитарно-эпидемиологическое заключение?","acceptedAnswer":{"@type":"Answer","text":"Срок действия зависит от вида деятельности и объекта. Для большинства медицинских видов работ — как правило, бессрочно. Некоторые виды требуют получения нового заключения каждые 5 лет."}},
+        {"@type":"Question","name":"Что делать, если пришла внеплановая проверка?","acceptedAnswer":{"@type":"Answer","text":"Оперативно оповестите нас. Мы профессионально сопровождаем проверки — присутствуем при осмотрах, контролируем законность действий проверяющих, помогаем с документами."}},
+        {"@type":"Question","name":"Помогаете с обращением медицинских отходов?","acceptedAnswer":{"@type":"Answer","text":"Да. Оцениваем систему обращения с отходами, помогаем подобрать лицензированного подрядчика, разрабатываем схему обращения, журнал учёта и инструкции для персонала."}},
+        {"@type":"Question","name":"Проводите обучение персонала?","acceptedAnswer":{"@type":"Answer","text":"Да. Проводим семинары и тренинги по санэпидблагополучию, дезинфекционному режиму, обращению с отходами. Разрабатываем систему внутренней аттестации сотрудников."}}
+      ]
+    }
+    </script>
+
+    <!-- Schema.org: WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "ДВЭБ — Дальневосточное бюро экспертиз",
+      "url": "https://двэб.рф/",
+      "inLanguage": "ru-RU"
+    }
+    </script>
+
 </head>
 <body>
 
@@ -277,7 +467,7 @@
         <div class="hero-inner">
             <div>
                 <div class="hero-badge">
-                    <span>🏥</span> Эксперты с опытом работы в Роспотребнадзоре 18+ лет
+                    <span>🏥</span> Эксперты с 18-летним опытом в санэпидблагополучии
                 </div>
                 <h1>Сопровождение <span>медицинских организаций</span></h1>
                 <p class="hero-text">
