@@ -460,7 +460,16 @@
 
 </head>
 <body>
-<script>history.scrollRestoration='manual'; window.scrollTo(0,0);</script>
+<script>
+// Новый заход → наверх. Обновление страницы → остаёмся на месте.
+if (!sessionStorage.getItem('dveb_visited')) {
+    history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+    sessionStorage.setItem('dveb_visited', '1');
+} else {
+    history.scrollRestoration = 'auto';
+}
+</script>
 
 <!-- HERO -->
 <section class="hero">
