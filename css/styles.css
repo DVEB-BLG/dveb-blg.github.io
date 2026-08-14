@@ -215,6 +215,26 @@ img { max-width: 100%; display: block; }
 .hero-subtitle { font-size: clamp(0.92rem, 1.6vw, 1.05rem); color: rgba(255,255,255,0.75); margin-bottom: 32px; max-width: 580px; line-height: 1.7; }
 .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
 
+/* Яркая кнопка образца заявления */
+.btn-zayavka {
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  box-shadow: 0 4px 18px rgba(255,107,53,0.4);
+  animation: zayavka-glow 2.5s ease-in-out infinite;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-zayavka:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(255,107,53,0.55);
+  background: linear-gradient(135deg, #ff5722, #e8800e);
+}
+@keyframes zayavka-glow {
+  0%,100% { box-shadow: 0 4px 18px rgba(255,107,53,0.4); }
+  50% { box-shadow: 0 4px 28px rgba(255,107,53,0.65); }
+}
+
 /* ===== SECTIONS ===== */
 .section { padding: 64px 0; }
 .section-header { margin-bottom: 36px; }
