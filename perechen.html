@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Перечень документов на проведение инспекции — ДВЭБ</title>
+<meta name="description" content="Перечень документов, необходимых для проведения санитарно-эпидемиологической экспертизы по видам деятельности. Выберите вид деятельности для просмотра списка документов.">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
+<link rel="stylesheet" href="css/styles.css">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Перечень документов на проведение инспекции — ДВЭБ">
+<meta property="og:description" content="Выберите вид деятельности, чтобы увидеть перечень необходимых документов для проведения санитарно-эпидемиологической экспертизы.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://двэб.рф/perechen.html">
+<meta property="og:image" content="assets/logo-transparent.png">
+<meta name="twitter:card" content="summary">
+</head>
+<body>
+
+<!-- Corner logo -->
+<img src="assets/logo-transparent.png" alt="ДВЭБ" class="corner-logo">
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <img src="assets/logo.png" alt="ДВЭБ" class="logo-img">
+      <div class="logo-text">
+        <span class="logo-title">Дальневосточное бюро экспертиз</span>
+      </div>
+    </a>
+    <div class="header-contacts">
+      <a href="tel:+79143896969" class="phone">+7 914 389 69 69</a>
+      <a href="consult.html" class="btn btn-outline">Консультация</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="tel:+79143896969">+7 914 389 69 69</a>
+    <a href="consult.html">Консультация</a>
+    <a href="quiz.html">Подать заявление</a>
+  </nav>
+</header>
+
+<!-- PAGE CONTENT -->
+<section class="section" id="perechen-page">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Документы</div>
+      <h1 class="section-title">Перечень документов на проведение инспекции</h1>
+      <p class="section-desc">Выберите вид деятельности, чтобы увидеть перечень необходимых документов.</p>
+    </div>
+
+    <div class="perechen-selector reveal">
+      <label for="activitySelect" class="perechen-label">Вид деятельности:</label>
+      <div class="perechen-select-wrap">
+        <select id="activitySelect" class="perechen-select">
+          <option value="">— Выберите вид деятельности —</option>
+          <option value="proektnaya">Экспертиза проектной документации (СЗЗ, НДС, ЗСО, ПДВ, ПРТО и др.)</option>
+          <option value="gigienicheskaya">Гигиеническая оценка результатов лабораторных исследований/измерений</option>
+          <option value="vodsnab">Водоснабжение (питьевое и хоз.-бытовое)</option>
+          <option value="vodlecheb">Водные объекты (лечебные, рекреационные)</option>
+          <option value="farm">Фармацевтическая деятельность</option>
+          <option value="med">Медицинская деятельность</option>
+          <option value="othody">Обращение с отходами I-IV классов опасности</option>
+          <option value="istochniki">Источники ионизирующего излучения (генерирующие)</option>
+          <option value="pba">ПБА I-IV групп патогенности</option>
+          <option value="obrazovanie">Образовательная деятельность</option>
+          <option value="dezinfekciya">Дезинфекционная деятельность</option>
+          <option value="transport">Транспортная инфраструктура</option>
+        </select>
+        <svg class="perechen-select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+    </div>
+
+    <div id="docsContainer" class="docs-container" style="display:none">
+      <div class="docs-title-wrap">
+        <h2 id="docsTitle" class="docs-title"></h2>
+      </div>
+      <ol id="docsList" class="docs-list"></ol>
+      <div id="docsNote" class="docs-note" style="display:none"></div>
+    </div>
+
+    <div id="docsEmpty" class="docs-empty reveal" style="display:none">
+      <div class="docs-empty-icon">📋</div>
+      <p>Выберите вид деятельности из списка выше, чтобы увидеть перечень документов.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-col" style="display:flex;align-items:center;gap:12px">
+      <img src="assets/logo.png" alt="ДВЭБ" class="footer-logo">
+      <p>© 2026 ООО «ДВЭБ»<br>Дальневосточное бюро экспертиз</p>
+    </div>
+    <div class="footer-col footer-legal">
+      <a href="privacy.html">Политика обработки ПДн</a>
+      <a href="terms.html">Правила использования сайта</a>
+      <a href="ethics.html">Кодекс корпоративной этики</a>
+    </div>
+    <div class="footer-col" style="text-align:right">
+      <p><a href="tel:+79143896969">+7 914 389 69 69</a></p>
+      <p><a href="mailto:office@двэб.рф">office@двэб.рф</a></p>
+    </div>
+  </div>
+</footer>
+
+<style>
+/* ===== Перечень документов — стили ===== */
+.perechen-selector {
+  max-width: 700px;
+  margin: 0 auto 32px;
+  text-align: center;
+}
+.perechen-label {
+  display: block;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+.perechen-select-wrap {
+  position: relative;
+  display: block;
+}
+.perechen-select {
+  width: 100%;
+  padding: 16px 48px 16px 20px;
+  font-family: 'Stem', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--brand-blue);
+  background: #fff;
+  border: 2px solid var(--brand-teal);
+  border-radius: 12px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 12px rgba(0,48,112,0.06);
+}
+.perechen-select:hover { border-color: var(--brand-blue); }
+.perechen-select:focus { border-color: var(--brand-blue); box-shadow: 0 0 0 4px rgba(0,48,112,0.1); }
+.perechen-select-arrow {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--brand-teal);
+  pointer-events: none;
+}
+
+.docs-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px 36px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+.docs-title-wrap {
+  border-left: 4px solid var(--brand-teal);
+  padding-left: 16px;
+  margin-bottom: 24px;
+}
+.docs-title {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--brand-blue);
+  margin: 0;
+}
+.docs-list {
+  list-style: none;
+  counter-reset: doc-counter;
+  padding: 0;
+  margin: 0;
+}
+.docs-list li {
+  counter-increment: doc-counter;
+  position: relative;
+  padding: 12px 0 12px 48px;
+  border-bottom: 1px solid rgba(0,48,112,0.06);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--text-primary, #1a1a2e);
+  white-space: pre-line;
+}
+.docs-list li:last-child { border-bottom: none; }
+.docs-list li::before {
+  content: counter(doc-counter);
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--brand-blue), var(--brand-teal));
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.docs-note {
+  margin-top: 24px;
+  padding: 16px 20px;
+  background: rgba(32,176,160,0.06);
+  border-radius: 10px;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  white-space: pre-line;
+}
+.docs-empty {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-secondary);
+}
+.docs-empty-icon { font-size: 2.5rem; margin-bottom: 12px; }
+
+@media (max-width: 767px) {
+  .docs-container { padding: 20px 16px; }
+  .docs-list li { padding-left: 40px; font-size: 0.9rem; }
+  .docs-list li::before { width: 28px; height: 28px; font-size: 0.72rem; }
+}
+</style>
+
+<script src="js/docs-data.js"></script>
+<script src="js/main.js"></script>
+<script>
+(function() {
+  var select = document.getElementById('activitySelect');
+  var container = document.getElementById('docsContainer');
+  var empty = document.getElementById('docsEmpty');
+  var titleEl = document.getElementById('docsTitle');
+  var listEl = document.getElementById('docsList');
+  var noteEl = document.getElementById('docsNote');
+
+  // Show empty state initially
+  empty.style.display = 'block';
+
+  select.addEventListener('change', function() {
+    var key = this.value;
+    if (!key || !window.DOCS_DATA[key]) {
+      container.style.display = 'none';
+      empty.style.display = 'block';
+      return;
+    }
+
+    var data = window.DOCS_DATA[key];
+
+    // Title
+    titleEl.textContent = data.title;
+
+    // Documents list
+    listEl.innerHTML = '';
+    data.docs.forEach(function(doc) {
+      var li = document.createElement('li');
+      li.textContent = doc;
+      listEl.appendChild(li);
+    });
+
+    // Note
+    if (data.note) {
+      noteEl.textContent = data.note;
+      noteEl.style.display = 'block';
+    } else {
+      noteEl.style.display = 'none';
+    }
+
+    container.style.display = 'block';
+    empty.style.display = 'none';
+
+    // Smooth scroll to results
+    container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+})();
+</script>
+</body>
+</html>

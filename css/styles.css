@@ -235,6 +235,23 @@ img { max-width: 100%; display: block; }
   50% { box-shadow: 0 4px 28px rgba(255,107,53,0.65); }
 }
 
+/* Кнопка перечня документов */
+.btn-perechen {
+  background: linear-gradient(135deg, #003070, #0066cc);
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+  box-shadow: 0 4px 18px rgba(0,48,112,0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-perechen:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0,48,112,0.5);
+  background: linear-gradient(135deg, #002855, #0055b3);
+}
+
 /* ===== SECTIONS ===== */
 .section { padding: 64px 0; }
 .section-header { margin-bottom: 36px; }
