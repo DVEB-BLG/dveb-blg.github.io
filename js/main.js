@@ -107,8 +107,28 @@ function submitForm(payload) {
       var allFilled = true;
       inputs.forEach(function(inp) { if (!inp.value.trim()) allFilled = false; });
       if (!allFilled) {
-        if (errorEl) errorEl.style.display = 'block';
+        if (errorEl) {
+          errorEl.textContent = 'Пожалуйста, заполните все обязательные поля';
+          errorEl.style.display = 'block';
+        }
         return false;
+      }
+      // Email — строгая проверка: @ затем точка после неё, корректные символы
+      var emailInput = step.querySelector('input[name="email"]');
+      if (emailInput) {
+        var ev = emailInput.value.trim();
+        // local@domain.tld: до @ — буквы/цифры/._%+-; после @ — домен с точкой, TLD от 2 букв
+        var emailRe = /^[A-Za-zА-Яа-яЁё0-9._%+-]+@(?!\.|-)(?!.*\.\.)[A-Za-zА-Яа-яЁё0-9-]+(?:\.[A-Za-zА-Яа-яЁё0-9-]+)+$/;
+        if (!emailRe.test(ev)) {
+          if (errorEl) {
+            errorEl.textContent = 'Некорректный email. Проверьте формат: например, name@mail.ru (нужны символ @ и точка в домене)';
+            errorEl.style.display = 'block';
+          }
+          emailInput.style.borderColor = '#e53935';
+          return false;
+        } else {
+          emailInput.style.borderColor = '';
+        }
       }
     }
 
