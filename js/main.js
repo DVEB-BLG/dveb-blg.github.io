@@ -120,14 +120,15 @@ function submitForm(payload) {
         // local@domain.tld: до @ — буквы/цифры/._%+-; после @ — домен с точкой, TLD от 2 букв
         var emailRe = /^[A-Za-zА-Яа-яЁё0-9._%+-]+@(?!\.|-)(?!.*\.\.)[A-Za-zА-Яа-яЁё0-9-]+(?:\.[A-Za-zА-Яа-яЁё0-9-]+)+$/;
         if (!emailRe.test(ev)) {
-          if (errorEl) {
-            errorEl.textContent = 'Некорректный email. Проверьте формат: например, name@mail.ru (нужны символ @ и точка в домене)';
-            errorEl.style.display = 'block';
-          }
+          if (errorEl) errorEl.style.display = 'block';
+          var emailErrorEl = document.getElementById('error-email');
+          if (emailErrorEl) emailErrorEl.style.display = 'block';
           emailInput.style.borderColor = '#e53935';
           return false;
         } else {
           emailInput.style.borderColor = '';
+          var emailErrorEl = document.getElementById('error-email');
+          if (emailErrorEl) emailErrorEl.style.display = 'none';
         }
       }
     }
