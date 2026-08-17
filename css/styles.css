@@ -130,6 +130,7 @@ img { max-width: 100%; display: block; }
   padding: 14px 24px; max-width: var(--max-w); margin: 0 auto; gap: 16px;
 }
 .logo { display: flex; align-items: center; gap: 12px; }
+.logo-text { display: flex; flex-direction: column; }
 .logo-img { width: 44px; height: 44px; object-fit: contain; border-radius: 8px; }
 .logo-title { font-size: clamp(1.4rem, 2.5vw, 1.8rem); font-weight: 700; color: var(--text-primary); line-height: 1.2; white-space: nowrap; letter-spacing: -0.02em; }
 .header-contacts { display: flex; align-items: center; gap: 20px; }
@@ -272,6 +273,10 @@ img { max-width: 100%; display: block; }
 .card h3 { font-size: 1.1rem; margin: 24px 0 10px; }
 .personnel-list li { padding: 11px 0; font-size: 0.92rem; border-bottom: 1px solid var(--border); }
 .personnel-list li:last-child { border: none; }
+
+.contact-info { flex: 1; }
+.contact-item { font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 10px; line-height: 1.5; }
+.contact-item a { color: var(--brand-teal); }
 
 /* ---- TEAM (medical landing style) ---- */
 .section-label { display: inline-block; font-size: 0.82rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--brand-blue); margin-bottom: 10px; }
@@ -718,3 +723,4 @@ img { max-width: 100%; display: block; }
   .reveal { opacity: 1; transform: none; }
 }
 .text-center { text-align: center; }
+.section-subtitle { font-size: 1rem; color: var(--text-secondary); max-width: 680px; margin: 10px auto 0; line-height: 1.5; }
