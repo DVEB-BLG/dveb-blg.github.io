@@ -714,3 +714,4 @@ img { max-width: 100%; display: block; }
   }
   .reveal { opacity: 1; transform: none; }
 }
+.text-center { text-align: center; }
