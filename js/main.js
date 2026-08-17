@@ -220,6 +220,23 @@ function submitForm(payload) {
       return;
     }
 
+    // Check additional consents
+    var extraConsents = [
+      { id: 'methodsCheck', err: 'error-methods' },
+      { id: 'noReturnCheck', err: 'error-noReturn' },
+      { id: 'schemesCheck', err: 'error-schemes' },
+      { id: 'fsaCheck', err: 'error-fsa' }
+    ];
+    for (var c = 0; c < extraConsents.length; c++) {
+      var box = document.getElementById(extraConsents[c].id);
+      if (box && !box.checked) {
+        var errEl = document.getElementById(extraConsents[c].err);
+        if (errEl) errEl.style.display = 'block';
+        box.closest('.consent-checkbox').style.borderColor = '#e53935';
+        return;
+      }
+    }
+
     // Check files for size
     var files = window.DVEB_getSelectedFiles ? window.DVEB_getSelectedFiles() : [];
     var sizeOk = true;
