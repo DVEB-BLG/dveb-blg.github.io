@@ -281,7 +281,7 @@ img { max-width: 100%; display: block; }
 /* ---- TEAM (medical landing style) ---- */
 .section-label { display: inline-block; font-size: 0.82rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--brand-blue); margin-bottom: 10px; }
 .team { padding: 80px 0; }
-.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; align-items: start; }
+.team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-top: 40px; align-items: start; }
 .team-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; text-align: center; transition: all 0.25s; box-shadow: var(--shadow-sm); }
 .team-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
 .team-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 2px; color: var(--text-primary); }
