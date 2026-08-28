@@ -251,6 +251,18 @@
         .cta-final h2 { font-size: 2rem; font-weight: 800; margin-bottom: 12px; color: var(--dark); }
         .cta-final p { font-size: 1.1rem; color: var(--gray); margin-bottom: 28px; }
 
+        /* ===== CALLBACK FORM ===== */
+        .callback-form { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; max-width:680px; margin:0 auto; }
+        .callback-form input { flex:1 1 190px; padding:14px 18px; border-radius:12px; border:1.5px solid var(--border); font-size:1rem; background:#fff; color:var(--dark); outline:none; transition:border-color .2s, box-shadow .2s; min-width:0; font-family:inherit; }
+        .callback-form input:focus { border-color: var(--blue); box-shadow:0 0 0 3px rgba(29,78,216,.12); }
+        .callback-form input::placeholder { color:#94a3b8; }
+        .callback-urgent { margin-top:18px; color:var(--gray); font-size:0.98rem; display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; }
+        .callback-alt { margin-top:10px; font-size:0.9rem; color:var(--gray); }
+        .callback-alt a { color:var(--blue); text-decoration:underline; }
+        .callback-note { margin-top:14px; font-size:0.8rem; color:var(--gray); }
+        .callback-note a { color:var(--gray); text-decoration:underline; }
+        .callback-success { display:none; background:#fff; border:1.5px solid var(--green-mid); color:var(--green); padding:16px 22px; border-radius:12px; font-weight:600; max-width:560px; margin:0 auto; }
+
         /* ===== FOOTER ===== */
         .footer { background: var(--gray-light); color: var(--gray); padding: 40px 0 28px; border-top: 1px solid var(--border); }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 36px; margin-bottom: 28px; }
@@ -361,7 +373,11 @@
             .team-card { padding: 22px; }
             .cta-final h2 { font-size: 1.4rem; }
             .cta-final .btn { width: 100%; min-height: 52px; }
-            .cta-final div[style*="flex"] { flex-direction: column; width: 100%; }
+            .callback-form { flex-direction: column; }
+            .callback-form input { flex: 1 1 auto; }
+            .callback-form .btn { width: 100%; min-height: 52px; }
+            .callback-urgent { flex-direction: column; gap: 10px; }
+            .callback-urgent .btn { width: 100%; }
             .pain-card { padding: 20px; }
             .pain-card-icon { font-size: 1.7rem; }
             .pain-card h3 { font-size: 1.05rem; }
@@ -942,11 +958,18 @@ if (!sessionStorage.getItem('dveb_visited')) {
 <section class="cta-final" id="contact">
     <div class="container">
         <h2>Готовы защитить свою клинику?</h2>
-        <p>Бесплатная консультация и расчёт стоимости сопровождения для вашей организации</p>
-        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-            <a href="tel:+79143896969" class="btn btn-outline" style="border-color:#e11d48; color:#e11d48;">📞 Позвонить</a>
-            <a href="https://max.ru/dveb_amur" class="btn btn-outline" style="border-color:#1d4ed8; color:#1d4ed8;">💬 Написать в Max</a>
+        <p>Оставьте заявку — перезвоним в течение 15 минут в рабочее время, бесплатно проконсультируем и рассчитаем стоимость сопровождения</p>
+        <form class="callback-form" id="callbackForm" autocomplete="on">
+            <input type="text" name="name" placeholder="Ваше имя" required>
+            <input type="tel" name="phone" placeholder="+7 (900) 000-00-00" required>
+            <button type="submit" class="btn btn-primary">Оставить заявку</button>
+        </form>
+        <div class="callback-urgent">Если срочно —
+            <a href="tel:+79143896969" class="btn btn-outline" style="border-color:#e11d48; color:#e11d48; padding:10px 24px;">📞 Позвонить</a>
         </div>
+        <p class="callback-alt">или напишите нам в <a href="https://max.ru/dveb_amur" target="_blank" rel="noopener">Max</a></p>
+        <p class="callback-note">Нажимая «Оставить заявку», вы соглашаетесь с <a href="/privacy.html">политикой конфиденциальности</a></p>
+        <div class="callback-success" id="callbackSuccess">✅ Заявка отправлена! Перезвоним в течение 15 минут в рабочее время</div>
     </div>
 </section>
 
@@ -1058,6 +1081,49 @@ if (!sessionStorage.getItem('dveb_visited')) {
         el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
         observer.observe(el);
     });
+</script>
+
+<script src="/js/form-config.js"></script>
+<script>
+(function() {
+    var form = document.getElementById('callbackForm');
+    if (!form) return;
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var name = (form.querySelector('input[name="name"]').value || '').trim();
+        var phone = (form.querySelector('input[name="phone"]').value || '').trim();
+        if (!name || !phone) return;
+
+        var btn = form.querySelector('button[type="submit"]');
+        if (btn) { btn.disabled = true; btn.textContent = 'Отправка...'; }
+
+        if (window.ym) ym(53775253, 'reachGoal', 'med_callback_submit');
+
+        var payload = { formType: 'Мед-лендинг — перезвонить', name: name, phone: phone };
+        var finish = function() {
+            form.style.display = 'none';
+            var s = document.getElementById('callbackSuccess');
+            if (s) s.style.display = 'block';
+        };
+
+        if (window.DVEB_FORM_BACKEND) {
+            fetch(window.DVEB_FORM_BACKEND, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).catch(function() {}).then(finish, finish);
+        } else {
+            finish();
+        }
+    });
+
+    var tel = document.querySelector('.callback-urgent a[href^="tel:"]');
+    if (tel) tel.addEventListener('click', function() {
+        if (window.ym) ym(53775253, 'reachGoal', 'med_phone_click');
+    });
+})();
 </script>
 
 </body>
