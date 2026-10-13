@@ -65,6 +65,59 @@ function submitForm(payload) {
     });
   }
 
+  // ===== Условная логика по типу инспекции =====
+  var TYPE_EXPERTIZA = 'Санитарно-эпидемиологическая экспертиза';
+  var TYPE_OBSLEDOVANIE = 'Санитарно-эпидемиологическое обследование';
+  var TYPE_GIGIENA = 'Гигиеническая оценка результатов исследований и измерений';
+
+  function getSelectedInspectionTypes() {
+    var checked = steps[0].querySelectorAll('input[name="inspectionType"]:checked');
+    return Array.prototype.map.call(checked, function(c) { return c.value; });
+  }
+
+  function isGigienaOnly() {
+    var vals = getSelectedInspectionTypes();
+    return vals.length === 1 && vals[0] === TYPE_GIGIENA;
+  }
+
+  // Показать/скрыть пункты шага «Тип объекта» в зависимости от выбора типа инспекции
+  function filterObjectStep() {
+    var vals = getSelectedInspectionTypes();
+    var hasExpertiza = vals.indexOf(TYPE_EXPERTIZA) !== -1;
+    var hasObsledovanie = vals.indexOf(TYPE_OBSLEDOVANIE) !== -1;
+
+    steps[1].querySelectorAll('.quiz-option').forEach(function(opt) {
+      var input = opt.querySelector('input');
+      if (!input) return;
+      var v = input.value;
+
+      // «Гигиеническая оценка» на шаге 1 доступна только если выбран
+      // соответствующий тип инспекции (или ничего ещё не выбрано)
+      var hide = false;
+      if (v === TYPE_GIGIENA && !hasExpertiza && !hasObsledovanie) {
+        // выбран только «Гигиеническая оценка» — шаг 1 всё равно будет пропущен,
+        // но пункт оставляем видимым для консистентности
+        hide = false;
+      } else if (v === TYPE_GIGIENA) {
+        hide = true;
+      }
+      // При «Обследовании» — скрыть проекты и экспертизу протоколов
+      if (hasObsledovanie && ['Проект ПДВ', 'Проект СЗЗ', 'Проект ЗСО', 'Проект НДС', 'Размещение ПРТО', 'Экспертиза протоколов', TYPE_GIGIENA].indexOf(v) !== -1) {
+        hide = true;
+      }
+
+      opt.style.display = hide ? 'none' : '';
+      if (hide) {
+        opt.classList.remove('selected');
+        input.checked = false;
+        if (input.id === 'otherOption') {
+          var otherInput = document.getElementById('otherInput');
+          if (otherInput) { otherInput.style.display = 'none'; otherInput.value = ''; }
+        }
+      }
+    });
+  }
+
   // Validate step before proceeding
   function validateStep(stepIdx) {
     var step = steps[stepIdx];
@@ -145,9 +198,14 @@ function submitForm(payload) {
 
       if (!validateStep(stepIdx)) return;
 
-      if (stepIdx < totalSteps - 1) {
-        stepIdx++;
-        current = stepIdx;
+      filterObjectStep();
+
+      // При выборе только «Гигиеническая оценка» — пропускаем шаг «Тип объекта»
+      var next = stepIdx + 1;
+      if (stepIdx === 0 && next === 1 && isGigienaOnly()) next = 2;
+
+      if (next < totalSteps) {
+        current = next;
         if (current > maxReached) maxReached = current;
         showStep(current);
       }
@@ -159,9 +217,11 @@ function submitForm(payload) {
     btn.addEventListener('click', function() {
       var step = this.closest('.quiz-step');
       var stepIdx = Array.prototype.indexOf.call(steps, step);
-      if (stepIdx > 0) {
-        stepIdx--;
-        current = stepIdx;
+      var prev = stepIdx - 1;
+      // Возврат с контактов при «только гигиеническая оценка» — сразу к типу инспекции
+      if (stepIdx === 2 && prev === 1 && isGigienaOnly()) prev = 0;
+      if (prev >= 0) {
+        current = prev;
         showStep(current);
       }
     });
@@ -223,8 +283,10 @@ function submitForm(payload) {
   quiz.addEventListener('submit', function(e) {
     e.preventDefault();
 
-    // Validate all steps up to the last
+    // Validate all steps up to the last (шаг «Тип объекта» пропускается
+    // при выборе только «Гигиеническая оценка»)
     for (var i = 0; i < totalSteps - 1; i++) {
+      if (i === 1 && isGigienaOnly()) continue;
       if (!validateStep(i)) {
         current = i;
         showStep(i);
