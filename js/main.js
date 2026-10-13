@@ -325,7 +325,7 @@ function submitForm(payload) {
     var sizeOk = true;
     files.forEach(function(f) { if (f.size > 30 * 1024 * 1024) sizeOk = false; });
     if (!sizeOk) {
-      alert('Один или несколько файлов превышают 30 МБ. Уберите их.');
+      alert('Из-за технических ограничений приём файлов размером более 30 МБ невозможен. Просим вас направить данные файлы отдельно на почту office@двэб.рф, либо указать в комментарии выше ссылку на облачное хранилище с данными файлами.');
       return;
     }
 
@@ -355,6 +355,7 @@ function submitForm(payload) {
 
     if (files.length > 0) {
       var uploaded = 0;
+      var batchId = 'b' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
       files.forEach(function(f) {
         var reader = new FileReader();
         reader.onload = function(ev) {
@@ -368,7 +369,9 @@ function submitForm(payload) {
               fileName: f.name,
               mimeType: f.type || 'application/octet-stream',
               fileData: base64,
-              clientName: payload.name || 'Без_имени'
+              clientName: payload.name || 'Без_имени',
+              batchId: batchId,
+              batchTotal: files.length
             })
           }).then(function() {
             uploaded++;
@@ -465,7 +468,7 @@ function submitForm(payload) {
       fileTotal.style.display = 'block';
       fileTotal.className = hasError ? 'file-total error' : 'file-total';
       fileTotal.textContent = 'Всего файлов: ' + selectedFiles.length + ', размер: ' + formatSize(totalSize) +
-        (hasError ? ' — уберите файлы больше 30 МБ' : '');
+        (hasError ? ' — файлы больше 30 МБ принять нельзя: направьте их на office@двэб.рф или укажите ссылку на облако в комментарии к заявке' : '');
     } else {
       fileTotal.style.display = 'none';
     }

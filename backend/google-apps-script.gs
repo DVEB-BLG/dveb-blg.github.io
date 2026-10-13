@@ -192,28 +192,73 @@ function handleFileUpload(data) {
   var fileUrl = file.getUrl();
   var folderUrl = requestFolder.getUrl();
   
-  // Уведомление в Telegram
-  var tgText = [
-    '📁 *Новый файл с сайта ДВЭБ*',
-    '',
-    'Заявка: ' + escapeMarkdown(padNum),
-    'Клиент: ' + escapeMarkdown(clientName),
-    'Файл: ' + escapeMarkdown(data.fileName),
-    '',
-    'Папка: ' + escapeMarkdown(folderUrl),
-    'Файл: ' + escapeMarkdown(fileUrl)
-  ].join('\n');
-  
-  UrlFetchApp.fetch('https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage', {
-    method: 'post',
-    contentType: 'application/json',
-    payload: JSON.stringify({
-      chat_id: TELEGRAM_CHAT_ID,
-      text: tgText,
-      parse_mode: 'MarkdownV2'
-    }),
-    muteHttpExceptions: true
-  });
+  // Батч-режим: копим список файлов, уведомление — одно на всю пачку
+  var batchId = data.batchId;
+  if (batchId) {
+    var props = PropertiesService.getScriptProperties();
+    var key = 'batch_' + batchId;
+    var batch = JSON.parse(props.getProperty(key) || '{"files":[]}');
+    batch.files.push({ name: data.fileName, url: fileUrl });
+    batch.padNum = padNum;
+    batch.clientName = clientName;
+    batch.folderUrl = folderUrl;
+    
+    if (batch.files.length >= Number(data.batchTotal || 1)) {
+      // Последний файл пачки — отправляем сводку и чистим состояние
+      var lines = [
+        '📁 *Новая загрузка с сайта ДВЭБ*',
+        '',
+        'Заявка: ' + escapeMarkdown(batch.padNum),
+        'Клиент: ' + escapeMarkdown(batch.clientName),
+        'Файлов: ' + escapeMarkdown(String(batch.files.length)),
+        ''
+      ];
+      batch.files.forEach(function(f) {
+        lines.push('• ' + escapeMarkdown(f.name) + ': ' + escapeMarkdown(f.url));
+      });
+      lines.push('');
+      lines.push('Папка: ' + escapeMarkdown(batch.folderUrl));
+      
+      UrlFetchApp.fetch('https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage', {
+        method: 'post',
+        contentType: 'application/json',
+        payload: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text: lines.join('\n'),
+          parse_mode: 'MarkdownV2'
+        }),
+        muteHttpExceptions: true
+      });
+      props.deleteProperty(key);
+    } else {
+      // Ждём остальные файлы (TTL-подчистка от зависших батчей не критична,
+      // ключи одноразовые, чистятся при завершении)
+      props.setProperty(key, JSON.stringify(batch));
+    }
+  } else {
+    // Одиночный файл без батча — прежнее поведение
+    var tgText = [
+      '📁 *Новый файл с сайта ДВЭБ*',
+      '',
+      'Заявка: ' + escapeMarkdown(padNum),
+      'Клиент: ' + escapeMarkdown(clientName),
+      'Файл: ' + escapeMarkdown(data.fileName),
+      '',
+      'Папка: ' + escapeMarkdown(folderUrl),
+      'Файл: ' + escapeMarkdown(fileUrl)
+    ].join('\n');
+    
+    UrlFetchApp.fetch('https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage', {
+      method: 'post',
+      contentType: 'application/json',
+      payload: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: tgText,
+        parse_mode: 'MarkdownV2'
+      }),
+      muteHttpExceptions: true
+    });
+  }
   
   return ContentService
     .createTextOutput(JSON.stringify({ success: true, url: fileUrl, folder: folderUrl }))
