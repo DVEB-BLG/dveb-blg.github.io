@@ -27,8 +27,17 @@ function doPost(e) {
     }
     
     writeToSheet(data);
-    sendEmail(data);
-    sendTelegram(data);
+    
+    var pdfUrl = '';
+    try {
+      pdfUrl = createRequestPdf(data);
+    } catch (pdfErr) {
+      // PDF не критичен: таблица и уведомления важнее
+      Logger.log('PDF error: ' + pdfErr);
+    }
+    
+    sendEmail(data, pdfUrl);
+    sendTelegram(data, pdfUrl);
     
     return ContentService
       .createTextOutput(JSON.stringify({ success: true }))
@@ -86,7 +95,7 @@ function writeToSheet(data) {
 /**
  * Отправка email
  */
-function sendEmail(data) {
+function sendEmail(data, pdfUrl) {
   var subject = 'Новая заявка с сайта ДВЭБ — ' + (data.formType || 'Форма');
   
   var body = [
@@ -108,8 +117,9 @@ function sendEmail(data) {
     '',
     '—',
     'Сайт: https://dveb-blg.github.io',
+    pdfUrl ? 'PDF-заявление: ' + pdfUrl : '',
     'Это автоматическое уведомление. Не отвечайте на это письмо.'
-  ].join('\n');
+  ].filter(function(l){ return l !== ''; }).join('\n');
   
   GmailApp.sendEmail(NOTIFY_EMAIL, subject, body, {
     from: 'office@двэб.рф',
@@ -120,7 +130,7 @@ function sendEmail(data) {
 /**
  * Отправка в Telegram
  */
-function sendTelegram(data) {
+function sendTelegram(data, pdfUrl) {
   if (TELEGRAM_BOT_TOKEN === '') return;
   
   var text = [
@@ -138,6 +148,7 @@ function sendTelegram(data) {
     if (msg.length > 200) msg = msg.substring(0, 200) + '...';
     text.push('Коммент: ' + escapeMarkdown(msg));
   }
+  if (pdfUrl) text.push('📄 PDF-заявление: ' + escapeMarkdown(pdfUrl));
   
   var url = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
   UrlFetchApp.fetch(url, {
@@ -150,6 +161,83 @@ function sendTelegram(data) {
     }),
     muteHttpExceptions: true
   });
+}
+
+// ============================================
+//          ГЕНЕРАЦИЯ PDF-ЗАЯВЛЕНИЯ
+// ============================================
+
+/**
+ * Создаёт PDF «Заявление на проведение инспекции» из данных квиза,
+ * сохраняет в папку заявки на Google Drive и возвращает ссылку.
+ */
+function createRequestPdf(data) {
+  var requestNum = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet().getLastRow();
+  var padNum = ('00' + requestNum).slice(-3);
+  
+  var safeName = String(data.name || 'Без_имени')
+    .replace(/[^a-zA-Zа-яА-Я0-9\s]/g, '').trim().replace(/\s+/g, '_');
+  if (!safeName) safeName = 'Без_имени';
+  
+  // Папка заявки — та же, что для файлов (001_Имя_Фамилия)
+  var rootFolders = DriveApp.getFoldersByName('ДВЭБ — Заявки с сайта');
+  var rootFolder = rootFolders.hasNext() ? rootFolders.next() : DriveApp.createFolder('ДВЭБ — Заявки с сайта');
+  var folderName = padNum + '_' + safeName;
+  var subFolders = rootFolder.getFoldersByName(folderName);
+  var requestFolder = subFolders.hasNext() ? subFolders.next() : rootFolder.createFolder(folderName);
+  
+  var now = Utilities.formatDate(new Date(), 'Asia/Yakutsk', 'dd.MM.yyyy HH:mm');
+  
+  var objectType = data.objectType || '—';
+  if (data.objectType === 'Другое' && data.objectTypeOther) {
+    objectType += ' — ' + data.objectTypeOther;
+  }
+  
+  function esc(s) {
+    return String(s || '—')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+  
+  var html = [
+    '<html><head><meta charset="UTF-8">',
+    '<style>',
+    'body { font-family: Arial, sans-serif; font-size: 12px; color: #111; }',
+    'h2 { text-align: center; margin-bottom: 2px; }',
+    '.sub { text-align: center; color: #444; margin-top: 0; }',
+    'table { width: 100%; border-collapse: collapse; margin-top: 16px; }',
+    'td { border: 1px solid #999; padding: 6px 8px; vertical-align: top; }',
+    'td.k { width: 35%; background: #f2f2f2; font-weight: bold; }',
+    '.footer { margin-top: 24px; color: #666; font-size: 10px; }',
+    '</style></head><body>',
+    '<h2>ЗАЯВЛЕНИЕ</h2>',
+    '<p class="sub">на проведение инспекции (с сайта двэб.рф)</p>',
+    '<table>',
+    row('Номер заявки', '№ ' + padNum + ' от ' + now),
+    row('Тип инспекции', data.inspectionType || '—'),
+    row('Тип объекта / вид деятельности', objectType),
+    row('Организация', data.organization || '—'),
+    row('Контактное лицо', data.name || '—'),
+    row('Телефон', data.phone || '—'),
+    row('Email', data.email || '—'),
+    row('Дополнительная информация', data.message || data.question || '—'),
+    row('Источник (форма)', data.formType || '—'),
+    '</table>',
+    '<p class="footer">Заявка подана через сайт https://двэб.рф. Исполнитель: ООО «Дальневосточное бюро экспертиз», RA.RU.710669.</p>',
+    '</body></html>'
+  ].join('\n');
+  
+  function row(k, v) {
+    return '<tr><td class="k">' + k + '</td><td>' + esc(v) + '</td></tr>';
+  }
+  
+  var blob = Utilities.newBlob(html, 'text/html', 'statement.html')
+    .getAs('application/pdf')
+    .setName('Заявление_' + padNum + '_' + safeName + '.pdf');
+  
+  var file = requestFolder.createFile(blob);
+  file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+  
+  return file.getUrl();
 }
 
 // ============================================
