@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>ДВАЦ — аккредитованная испытательная лаборатория в Благовещенске</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Испытательная лаборатория ДВАЦ: лабораторные измерения для застройщиков (ЗОЗ/ЗОС), СОУТ, производственного контроля и медорганизаций. Аттестат RA.RU.21РТ85, ГОСТ ISO/IEC 17025-2019. Благовещенск, выезд по ДФО.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --teal:#2aa7a5; --teal-b:#42c0be; --blue:#678acf; --blue-d:#4a6cb8;
+    --ink:#1e2a32; --mut:#5b6b76; --soft:#f4fbfb; --line:#dceeee;
+  }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Segoe UI','PT Sans',Arial,sans-serif; color:var(--ink); background:#fff; line-height:1.6; }
+  .wrap { max-width:1120px; margin:0 auto; padding:0 20px; }
+  h2 { font-size:clamp(22px,3.2vw,32px); font-weight:800; margin-bottom:10px; letter-spacing:.3px; }
+  h2 .num { color:var(--blue); margin-right:8px; }
+  .sub { color:var(--mut); margin-bottom:34px; max-width:720px; }
+  section { padding:72px 0; }
+  section.alt { background:var(--soft); }
+
+  /* header */
+  header { position:sticky; top:0; z-index:50; background:rgba(255,255,255,.94); backdrop-filter:blur(8px); border-bottom:1px solid var(--line); }
+  .nav { display:flex; justify-content:space-between; align-items:center; padding:14px 20px; max-width:1120px; margin:0 auto; }
+  .logo { font-size:24px; font-weight:800; letter-spacing:2px; color:var(--ink); text-decoration:none; }
+  .logo span { background:linear-gradient(135deg,var(--teal),var(--blue)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .nav .links { display:flex; gap:26px; }
+  .nav .links a { color:var(--ink); text-decoration:none; font-size:14.5px; font-weight:600; opacity:.85; }
+  .nav .links a:hover { color:var(--teal); opacity:1; }
+  .btn { display:inline-block; background:linear-gradient(135deg,var(--teal),var(--blue)); color:#fff; padding:12px 26px; border-radius:10px; text-decoration:none; font-weight:700; font-size:15px; border:none; cursor:pointer; box-shadow:0 4px 16px rgba(42,167,165,.35); transition:transform .15s, box-shadow .15s; }
+  .btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(42,167,165,.45); }
+  .btn.ghost { background:#fff; color:var(--teal); border:2px solid var(--teal); box-shadow:none; }
+  .nav .btn { padding:9px 20px; font-size:14px; }
+
+  /* hero */
+  .hero { position:relative; background:linear-gradient(135deg,#2aa7a5 0%,#42c0be 45%,#678acf 100%); color:#fff; padding:88px 0 96px; overflow:hidden; }
+  .hero::after { content:''; position:absolute; right:-100px; top:-100px; width:420px; height:420px; border-radius:50%; background:rgba(255,255,255,.09); }
+  .hero::before { content:''; position:absolute; left:-80px; bottom:-140px; width:340px; height:340px; border-radius:50%; background:rgba(255,255,255,.07); }
+  .hero .wrap { position:relative; z-index:2; }
+  .hero h1 { font-size:clamp(28px,4.6vw,46px); font-weight:800; line-height:1.2; max-width:800px; }
+  .hero .lead { font-size:clamp(15px,1.8vw,18px); opacity:.95; max-width:640px; margin:18px 0 30px; }
+  .chips { display:flex; flex-wrap:wrap; gap:12px; margin-top:38px; }
+  .chip { background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.38); border-radius:12px; padding:10px 18px; backdrop-filter:blur(3px); }
+  .chip b { display:block; font-size:16px; letter-spacing:.5px; }
+  .chip span { font-size:12px; opacity:.9; }
+
+  /* audiences */
+  .aud { display:flex; flex-wrap:wrap; gap:10px; }
+  .aud span { background:#e7f7f7; color:#1d7c7a; border-radius:24px; padding:9px 20px; font-size:15px; font-weight:600; }
+
+  /* services */
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:22px; }
+  .card { border:1px solid var(--line); border-radius:16px; padding:26px 24px 20px; background:#fff; }
+  .card .ico { font-size:30px; }
+  .card h3 { font-size:18px; margin:12px 0 10px; }
+  .card ul { list-style:none; }
+  .card li { font-size:14px; color:var(--mut); padding-left:16px; position:relative; margin-bottom:7px; }
+  .card li::before { content:''; position:absolute; left:0; top:8px; width:7px; height:7px; border-radius:2px; background:var(--teal); }
+  .card.hl { background:linear-gradient(135deg,#eafafa,#eef3fc); border-color:var(--teal); }
+
+  /* advantages */
+  .adv { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:20px; }
+  .adv div { background:#fff; border:1px solid #e2eef0; border-left:4px solid var(--teal); border-radius:10px; padding:18px 20px 14px; font-size:14px; color:var(--mut); }
+  .adv b { display:block; color:var(--teal); font-size:16px; margin-bottom:4px; }
+
+  /* factors */
+  table { width:100%; border-collapse:collapse; background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 2px 14px rgba(30,42,50,.07); }
+  th { background:linear-gradient(135deg,var(--teal),var(--blue)); color:#fff; font-size:14.5px; text-align:left; padding:14px 18px; font-weight:600; }
+  td { font-size:14.5px; padding:12px 18px; border-bottom:1px solid #e4f0f1; vertical-align:top; }
+  tr:nth-child(even) td { background:#f7fcfc; }
+  td:first-child { font-weight:600; white-space:nowrap; }
+  .tbl-scroll { overflow-x:auto; }
+
+  /* accreditation */
+  .acc { display:flex; gap:44px; align-items:center; }
+  .acc img { width:min(480px,100%); border:1px solid #ccc; border-radius:10px; box-shadow:0 10px 34px rgba(30,42,50,.16); }
+  .acc .txt { flex:1; }
+  .acc ul { list-style:none; margin-top:8px; }
+  .acc li { font-size:15.5px; padding-left:24px; position:relative; margin-bottom:12px; }
+  .acc li::before { content:'✓'; position:absolute; left:0; color:var(--teal); font-weight:800; }
+
+  /* synergy */
+  .syn { background:linear-gradient(135deg,#1e2a32,#2c4150); color:#fff; border-radius:18px; padding:40px 42px; }
+  .syn h3 { font-size:22px; margin-bottom:12px; }
+  .syn p { opacity:.92; font-size:15.5px; max-width:760px; }
+
+  /* steps */
+  .steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:20px; counter-reset:st; }
+  .steps div { background:#fff; border:1px solid var(--line); border-radius:12px; padding:22px 20px; position:relative; }
+  .steps div::before { counter-increment:st; content:counter(st); position:absolute; top:-14px; left:18px; width:32px; height:32px; border-radius:50%; background:linear-gradient(135deg,var(--teal),var(--blue)); color:#fff; font-weight:800; display:flex; align-items:center; justify-content:center; font-size:15px; }
+  .steps b { display:block; margin:8px 0 6px; color:var(--teal); font-size:16px; }
+  .steps p { font-size:14px; color:var(--mut); }
+
+  /* cta */
+  .cta-band { background:linear-gradient(135deg,#2aa7a5 0%,#42c0be 45%,#678acf 100%); color:#fff; padding:70px 0; }
+  .cta-in { display:flex; justify-content:space-between; align-items:center; gap:40px; flex-wrap:wrap; }
+  .cta-in .l h2 { color:#fff; }
+  .cta-in .l p { opacity:.94; font-size:16px; max-width:520px; margin-top:8px; }
+  .contacts { text-align:right; font-size:17px; line-height:1.9; }
+  .contacts a { color:#fff; text-decoration:none; font-weight:700; font-size:22px; }
+  .contacts a:hover { text-decoration:underline; }
+
+  footer { background:#15202a; color:#8fa3ad; padding:36px 0; font-size:13.5px; }
+  .foot-in { display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; }
+
+  @media (max-width:760px) {
+    .nav .links { display:none; }
+    .acc { flex-direction:column; }
+    .contacts { text-align:left; }
+    section { padding:52px 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a class="logo" href="#top">ДВ<span>АЦ</span></a>
+    <div class="links">
+      <a href="#services">Услуги</a>
+      <a href="#factors">Факторы</a>
+      <a href="#accreditation">Аккредитация</a>
+      <a href="#contacts">Контакты</a>
+    </div>
+    <a class="btn" href="tel:+79622848585">8-962-284-85-85</a>
+  </nav>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <h1>Аккредитованная испытательная лаборатория для бизнеса и застройщиков Дальнего Востока</h1>
+    <p class="lead">Лабораторно-инструментальные измерения физических факторов, исследования химического и микробиологического состава среды — от выбора земельного участка до ввода объекта в эксплуатацию и регулярного производственного контроля.</p>
+    <a class="btn ghost" href="#contacts">Рассчитать стоимость</a>
+    <div class="chips">
+      <div class="chip"><b>RA.RU.21РТ85</b><span>аттестат аккредитации, Росаккредитация</span></div>
+      <div class="chip"><b>ГОСТ ISO/IEC 17025-2019</b><span>испытательная лаборатория</span></div>
+      <div class="chip"><b>91 лист</b><span>область аккредитации</span></div>
+      <div class="chip"><b>ДФО</b><span>выезд по регионам</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="num">01 /</span> Кому мы полезны</h2>
+    <p class="sub">Работаем с организациями любого масштаба — от небольших клиник до крупных девелоперов.</p>
+    <div class="aud">
+      <span>Застройщики и девелоперы</span>
+      <span>Промышленные предприятия</span>
+      <span>Медицинские центры и клиники</span>
+      <span>Общепит и гостиницы</span>
+      <span>Организаторы СОУТ</span>
+      <span>Управляющие компании</span>
+      <span>Проектировщики</span>
+      <span>Органы инспекции</span>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="services">
+  <div class="wrap">
+    <h2><span class="num">02 /</span> Основные направления</h2>
+    <p class="sub">Полный цикл измерений и исследований на базе собственной лаборатории.</p>
+    <div class="grid">
+      <div class="card hl">
+        <div class="ico">🏗️</div>
+        <h3>Застройщикам: от участка до ЗОС</h3>
+        <ul>
+          <li>исследования на этапе выбора и подготовки земельного участка</li>
+          <li>замеры для ЗОЗ/ЗОС и ввода объектов «под ключ»</li>
+          <li>радон, гамма-фон, шум, микроклимат, освещение и КЕО в жилых домах</li>
+          <li>опыт работы с крупными застройщиками Дальнего Востока</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="ico">🏭</div>
+        <h3>Производственным предприятиям</h3>
+        <ul>
+          <li>измерения на рабочих местах для СОУТ и производственного контроля</li>
+          <li>воздух рабочей зоны: химия, аэрозоли, пыль</li>
+          <li>шум, вибрация, микроклимат, освещённость</li>
+          <li>ЭМИ — от промышленной частоты 50 Гц до 95 ГГц</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="ico">🩺</div>
+        <h3>Медицинским организациям</h3>
+        <ul>
+          <li>лабораторное обеспечение производственного контроля и лицензирования</li>
+          <li>бактериология: воздух, смывы, контроль стерильности, стерилизаторы</li>
+          <li>физические факторы: освещённость, микроклимат, шум, ЭМИ ПЭВМ</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="ico">📐</div>
+        <h3>Экспертиза протоколов</h3>
+        <ul>
+          <li>гигиеническая оценка протоколов на соответствие санитарным нормам</li>
+          <li>экспертные заключения по результатам измерений</li>
+          <li>партнёрство с органом инспекции ООО «ДВЭБ» (RA.RU.710669)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="num">03 /</span> Почему ДВАЦ</h2>
+    <p class="sub">Лабораторное качество по цене ниже рынка — в среднем на 20%.</p>
+    <div class="adv">
+      <div><b>Точность</b>современное поверенное оборудование, диапазоны аттестованы</div>
+      <div><b>Полный цикл</b>весь комплекс исследований на базе собственной лаборатории</div>
+      <div><b>Скорость</b>кратчайшие сроки выполнения работ, график — под ваш объект</div>
+      <div><b>Цена</b>в среднем на 20% ниже рынка при лабораторном качестве</div>
+      <div><b>Выезд</b>по Амурской области и всему Дальнему Востоку</div>
+      <div><b>Эксперты</b>врачи со стажем 18+ лет из системы Роспотребнадзора</div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="factors">
+  <div class="wrap">
+    <h2><span class="num">04 /</span> Область аккредитации — измеряемые факторы</h2>
+    <p class="sub">Полная область аккредитации (91 лист) — по запросу. Для медицинских организаций — отдельный прайс-лист.</p>
+    <div class="tbl-scroll">
+    <table>
+      <tr><th style="width:20%">Фактор</th><th>Что измеряем</th><th style="width:26%">Диапазон / охват</th></tr>
+      <tr><td>Шум</td><td>уровни звукового давления, эквивалентные и максимальные уровни, октавный анализ</td><td>по СанПиН / ГОСТ 23337</td></tr>
+      <tr><td>Инфразвук</td><td>общий и октавные полосы частот</td><td>29,6–151,5 дБ</td></tr>
+      <tr><td>Вибрация</td><td>общая и локальная</td><td>по СанПиН 1.2.3685</td></tr>
+      <tr><td>Микроклимат</td><td>температура, влажность, скорость движения воздуха</td><td>−40…+70 °C · 3–98 % · 0,05–20 м/с</td></tr>
+      <tr><td>Освещение</td><td>искусственное, естественное (КЕО), наружное; пульсация, ослеплённость, яркость</td><td>по ГОСТ 33393, СП 52.13330</td></tr>
+      <tr><td>ЭМИ</td><td>поля 50 Гц; 0,01–0,03 / 0,03–300 / 300–40000 МГц; плотность потока энергии</td><td>до 95 000 МГц — включая 5G</td></tr>
+      <tr><td>УФ-излучение</td><td>ультрафиолет производственных источников</td><td>по Р 50.2.053</td></tr>
+      <tr><td>Химический фактор</td><td>NO₂, CO, SO₂, NH₃, O₃, H₂S, HCl, кислоты, формальдегид, фенол, ацетон, углеводороды и др.</td><td>газоанализатор ГАНК-4</td></tr>
+      <tr><td>Аэрозоли</td><td>взвешенные вещества, пыль (в т.ч. 20–70 % SiO₂), сварочный аэрозоль</td><td>по МУ 5309-90</td></tr>
+      <tr><td>Радиация</td><td>МАЭД гамма-излучения, плотность потока и ЭРОА радона</td><td>0,1–1000 мкЗв/ч · 1–10⁶ Бк/м³</td></tr>
+      <tr><td>Вентиляция</td><td>скорость воздуха, расчёт эффективности работы вентиляции</td><td>с выдачей заключения</td></tr>
+      <tr><td>Бактериология</td><td>воздух, смывы, стерильность, контроль стерилизаторов, биоплёнки</td><td>для медорганизаций</td></tr>
+    </table>
+    </div>
+  </div>
+</section>
+
+<section id="accreditation">
+  <div class="wrap">
+    <h2><span class="num">05 /</span> Наша аккредитация</h2>
+    <p class="sub">Аккредитация в национальной системе — Федеральная служба по аккредитации (Росаккредитация), ФЗ-412.</p>
+    <div class="acc">
+      <img src="attestat-p1.jpg" alt="Аттестат аккредитации RA.RU.21РТ85">
+      <div class="txt">
+        <h3>Аттестат аккредитации RA.RU.21РТ85</h3>
+        <ul>
+          <li>соответствие требованиям ГОСТ ISO/IEC 17025-2019 — компетентность испытательных лабораторий</li>
+          <li>запись в реестре аккредитованных лиц от 19.06.2025</li>
+          <li>актуальный статус — в реестре РАЛ: <a href="https://pub.fsa.gov.ru/ral/view/37799" style="color:var(--teal)">pub.fsa.gov.ru/ral/view/37799</a></li>
+          <li>протоколы ДВАЦ принимаются надзорными органами и экспертными организациями по всей России</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="syn">
+      <h3>ДВАЦ × ДВЭБ — полный цикл для застройщиков</h3>
+      <p>Санитарно-эпидемиологическая экспертиза проекта (ООО «ДВЭБ», орган инспекции RA.RU.710669) + лабораторные замеры для ЗОЗ и ЗОС (ООО «ДВАЦ») — всё, что нужно для ввода жилого дома в эксплуатацию, от одной команды, без потерь времени между этапами.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="num">06 /</span> Как начать работу</h2>
+    <p class="sub">Бесплатно рассчитаем стоимость по перечню точек и факторов — в течение 1 дня.</p>
+    <div class="steps">
+      <div><b>Заявка</b><p>направьте перечень объектов и точек — по почте или телефону</p></div>
+      <div><b>Расчёт</b><p>подготовим коммерческое предложение под вашу задачу</p></div>
+      <div><b>Выезд</b><p>проведём измерения с учётом ваших сроков и графика работы объекта</p></div>
+      <div><b>Протоколы</b><p>оформим и выдадим аккредитованные протоколы и заключения</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band" id="contacts">
+  <div class="wrap cta-in">
+    <div class="l">
+      <h2>Готовы обсудить вашу задачу?</h2>
+      <p>Бесплатный расчёт стоимости по перечню точек и факторов. Ответим в течение рабочего дня.</p>
+    </div>
+    <div class="contacts">
+      <a href="tel:+79622848585">8-962-284-85-85</a><br>
+      <a href="tel:+74162548585" style="font-size:17px">(4162) 54-85-85</a><br>
+      <a href="mailto:dvac-blg@yandex.ru" style="font-size:17px">dvac-blg@yandex.ru</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <span>ООО «Дальневосточный аналитический центр» · ИНН/КПП 2801253208/280101001 · RA.RU.21РТ85</span>
+    <span>675000, г. Благовещенск, ул. 50 лет Октября, 24/2</span>
+  </div>
+</footer>
+
+</body>
+</html>
