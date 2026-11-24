@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ДВЭБ — защита бизнеса при проверках | Благовещенск</title>
+<meta name="description" content="Аккредитованный орган инспекции ДВЭБ: санитарно-эпидемиологические экспертизы, ХАССП, сопровождение при проверках Роспотребнадзора, лицензирование клиник. Эксперты изнутри системы.">
+<style>
+:root{--blue:#1f4e79;--accent:#3a76d9;--dark:#232a35;--grey:#6b7280;--bg:#f7f9fc}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font:16px/1.6 'Segoe UI','PT Sans',Arial,sans-serif;color:var(--dark)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+/* header */
+header{background:linear-gradient(135deg,#0b2e4f,#1f4e79 60%,#3a76d9);color:#fff;padding:14px 0;position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+.hnav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.hnav .brand{font-size:19px;font-weight:700;letter-spacing:.5px}
+.hnav .brand span{color:#8bd8f5}
+.hnav a{color:#dce9f7;text-decoration:none;font-size:14.5px;margin-left:18px;transition:.2s}
+.hnav a:hover{color:#fff}
+.hnav .tel{font-weight:700;color:#fff}
+/* hero */
+.hero{background:linear-gradient(135deg,#0b2e4f,#1f4e79 60%,#3a76d9);color:#fff;padding:70px 0 90px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;background:rgba(255,255,255,.07)}
+.hero:before{content:"";position:absolute;left:-80px;bottom:-160px;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.05)}
+.hero h1{font-size:40px;line-height:1.2;font-weight:700;max-width:720px}
+.hero h1 em{font-style:normal;color:#8bd8f5}
+.hero p{margin-top:18px;font-size:19px;opacity:.92;max-width:640px}
+.hero .btns{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap}
+.btn{display:inline-block;padding:14px 30px;border-radius:8px;text-decoration:none;font-weight:700;font-size:16.5px;transition:.2s}
+.btn.primary{background:#2ea3f2;color:#fff;box-shadow:0 6px 20px rgba(46,163,242,.4)}
+.btn.primary:hover{background:#1b8fd8;transform:translateY(-2px)}
+.btn.ghost{border:2px solid rgba(255,255,255,.55);color:#fff}
+.btn.ghost:hover{background:rgba(255,255,255,.12)}
+.hero .badges{margin-top:44px;display:flex;gap:28px;flex-wrap:wrap}
+.badge{font-size:13.5px;opacity:.9;padding-left:26px;position:relative}
+.badge:before{content:"✓";position:absolute;left:0;color:#8bd8f5;font-weight:700}
+/* stats */
+.stats{background:#fff;margin-top:-45px;padding:30px 0;box-shadow:0 10px 34px rgba(20,50,90,.12);border-radius:12px;position:relative;z-index:2}
+.stats .row{display:flex;flex-wrap:wrap}
+.stat{flex:1;min-width:200px;text-align:center;padding:10px 18px;border-right:1px solid #e3ebf4}
+.stat:last-child{border-right:none}
+.stat b{display:block;font-size:30px;color:var(--blue)}
+.stat span{color:var(--grey);font-size:14px}
+/* sections */
+section{padding:64px 0}
+section.alt{background:var(--bg)}
+h2.sec{font-size:29px;color:var(--blue);text-align:center;margin-bottom:12px}
+h2.sec:after{content:"";display:block;width:70px;height:4px;background:linear-gradient(90deg,var(--blue),var(--accent));margin:12px auto 0;border-radius:2px}
+.lead{text-align:center;color:var(--grey);max-width:700px;margin:0 auto 40px;font-size:17px}
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px}
+.card{background:#fff;border-radius:12px;padding:26px;box-shadow:0 4px 18px rgba(20,50,90,.09);border-top:4px solid var(--accent);transition:.25s}
+.card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(20,50,90,.16)}
+.card h3{color:var(--blue);font-size:19px;margin-bottom:10px}
+.card ul{list-style:none}
+.card li{padding-left:20px;position:relative;margin-bottom:7px;font-size:15px;color:#3b4757}
+.card li:before{content:"•";color:var(--accent);position:absolute;left:0;font-weight:700}
+/* trust block */
+.trust .grid .card{border-top-color:#2ea3f2}
+/* formats */
+.fmt{background:linear-gradient(135deg,#0b2e4f,#1f4e79);color:#fff;border-radius:14px;padding:38px 34px}
+.fmt h2{font-size:24px;margin-bottom:18px}
+.fmt li{margin-bottom:10px;padding-left:26px;position:relative;list-style:none;font-size:16px}
+.fmt li:before{content:"→";position:absolute;left:0;color:#8bd8f5;font-weight:700}
+/* why now */
+.why .card{border-top-color:#c9861a}
+.warn{background:#fff6e8;border-left:4px solid #e3a11c;border-radius:8px;padding:16px 20px;margin-top:18px;font-size:15px}
+/* CTA */
+.cta{background:linear-gradient(135deg,#1f4e79,#3a76d9);color:#fff;text-align:center;padding:74px 20px}
+.cta h2{font-size:30px;margin-bottom:14px}
+.cta p{opacity:.9;font-size:17px;margin-bottom:28px}
+.cta .btn.primary{background:#fff;color:var(--blue)}
+/* footer */
+footer{background:#14263c;color:#9fb4c9;padding:36px 0;font-size:14.5px}
+footer .cols{display:flex;flex-wrap:wrap;gap:40px}
+footer .col{flex:1;min-width:240px}
+footer b{color:#fff}
+footer a{color:#9fb4c9;text-decoration:none}
+footer a:hover{color:#fff}
+@media(max-width:720px){
+.hero h1{font-size:29px}
+.hnav a{margin-left:12px;font-size:13px}
+.stat b{font-size:23px}
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="wrap hnav">
+<div class="brand">ДВЭБ<span> · Дальневосточное бюро экспертиз</span></div>
+<nav>
+<a href="#services">Услуги</a>
+<a href="#about">Кто мы</a>
+<a href="#formats">Сотрудничество</a>
+<a class="tel" href="tel:+79143896969">+7 (914) 389-69-69</a>
+</nav>
+</div>
+</header>
+
+<div class="hero">
+<div class="wrap">
+<h1>Проверка придёт. <em>Ваш бизнес будет готов.</em></h1>
+<p>Защита бизнеса при проверках Роспотребнадзора и Росздравнадзора: экспертизы, документы, сопровождение — команда, которая знает систему изнутри.</p>
+<div class="btns">
+<a class="btn primary" href="#services">Наши услуги</a>
+<a class="btn ghost" href="tel:+79143896969">Получить консультацию</a>
+</div>
+<div class="badges">
+<div class="badge">Аккредитация Росаккредитации RA.RU.710669</div>
+<div class="badge">Врачи-эксперты с опытом в Роспотребнадзоре 14–20 лет</div>
+<div class="badge">Собственные аккредитованные лаборатории</div>
+</div>
+</div>
+</div>
+
+<div class="wrap">
+<div class="stats">
+<div class="row">
+<div class="stat"><b>7 лет</b><span>экспертной работы на рынке ДФО</span></div>
+<div class="stat"><b>500+</b><span>объектов экспертиз и сопровождения</span></div>
+<div class="stat"><b>от 5 дней</b><span>срок санитарно-эпидемиологической экспертизы</span></div>
+<div class="stat"><b>90%</b><span>пунктов чек-листа закрываем до проверки</span></div>
+</div>
+</div>
+</div>
+
+<section id="about">
+<div class="wrap">
+<h2 class="sec">Кто мы</h2>
+<p class="lead">Дальневосточное бюро экспертиз — команда изнутри системы. Мы не объясняем, «как наверное проверяют», — мы знаем, как это происходит на самом деле.</p>
+<div class="grid trust">
+<div class="card">
+<h3>Аккредитованный орган инспекции</h3>
+<ul>
+<li>Росаккредитация, запись RA.RU.710669 (ГОСТ Р ИСО/МЭК 17020-2012)</li>
+<li>Сами проводим санэпидэкспертизы и обследования</li>
+<li>Экспертные заключения легитимны для любых госорганов РФ</li>
+</ul>
+</div>
+<div class="card">
+<h3>Эксперты из системы</h3>
+<ul>
+<li>Врачи-эксперты с руководящим опытом в Роспотребнадзоре от 14 до 20 лет</li>
+<li>Знаем логику, чек-листы и границы полномочий проверяющего</li>
+</ul>
+</div>
+<div class="card">
+<h3>Свои лаборатории</h3>
+<ul>
+<li>Микробиологическая и физико-химическая аккредитованные лаборатории (ДВАЦ, RA.RU.21РТ85)</li>
+<li>Смывы, микроклимат, освещённость, стерильность и др.</li>
+</ul>
+</div>
+<div class="card">
+<h3>Независимость</h3>
+<ul>
+<li>Конфиденциальность при любых проверках</li>
+<li>Работаем по Амурской области и всему ДФО</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+<section id="services" class="alt">
+<div class="wrap">
+<h2 class="sec">Наши услуги</h2>
+<p class="lead">Полный цикл: от аудита до защиты в суде. Каждый блок закрывается отдельной командой с профильным опытом.</p>
+<div class="grid">
+<div class="card">
+<h3>🍲 Общепит: сопровождение заведений</h3>
+<ul>
+<li>Санитарный аудит по чек-листам Роспотребнадзора</li>
+<li>Разработка ХАССП (ТР ТС 021/2011)</li>
+<li>Комплект документов «под ключ»: ППК, журналы, приказы, договоры</li>
+<li>Подготовка и участие в проверках и профвизитах</li>
+</ul>
+</div>
+<div class="card">
+<h3>🔬 Санитарно-эпидемиологические экспертизы</h3>
+<ul>
+<li>Экспертизы проектной документации (СЗЗ, ДВ, ЗСО, ПРТО)</li>
+<li>Экспертизы видов деятельности</li>
+<li>Заключения для Роспотребнадзора, лицензирования, ввода объектов</li>
+<li>Срок — от 5 рабочих дней</li>
+</ul>
+</div>
+<div class="card">
+<h3>🏥 Медицинские клиники</h3>
+<ul>
+<li>Комплексное сопровождение: Роспотребнадзор, Минздрав, Росздравнадзор</li>
+<li>Лицензирование меддеятельности под ключ (СЭЗ, лицензия)</li>
+<li>Комплекты документов для Росздравнадзора</li>
+<li>Сайты, вывески, стенды по платным медуслугам</li>
+</ul>
+</div>
+<div class="card">
+<h3>📋 Инспекционные проверки</h3>
+<ul>
+<li>Проверки любого вида деятельности на соответствие законодательству Роспотребнадзора</li>
+<li>Лабораторное сопровождение своих проверок</li>
+</ul>
+</div>
+<div class="card">
+<h3>⚖️ Защита в госорганах и суде</h3>
+<ul>
+<li>Возражения на акты и протоколы</li>
+<li>Снижение штрафов, обжалование постановлений и предписаний</li>
+<li>Ответы на жалобы потребителей и пациентов</li>
+</ul>
+</div>
+<div class="card">
+<h3>🎓 Семинары и абонемент</h3>
+<ul>
+<li>Семинары: подготовка к проверкам, ХАССП, действия персонала</li>
+<li>Абонентское сопровождение — внешний отдел качества предприятия</li>
+<li>Периодические проверки и отчёт руководителю</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+<section id="formats">
+<div class="wrap">
+<div class="fmt">
+<h2>Сотрудничество с администрацией и бизнес-сообществом</h2>
+<ul>
+<li>Бесплатные семинары и вебинары для предпринимателей — на площадках администрации и деловых центров</li>
+<li>Экспресс-консультации на городских мероприятиях, ярмарках, форумах</li>
+<li>Специальные условия на услуги для предпринимателей Благовещенска</li>
+<li>Постоянная экспертная поддержка: ответы на запросы администрации и бизнеса</li>
+</ul>
+</div>
+</div>
+</section>
+
+<section class="why alt">
+<div class="wrap">
+<h2 class="sec">Почему это важно именно сейчас</h2>
+<div class="grid">
+<div class="card">
+<h3>Новые санитарные правила</h3>
+<p>С 01.09.2026 действуют обновлённые санправила — документы предприятий нужно приводить в соответствие уже сегодня.</p>
+<div class="warn">Штрафы для юрлиц — до 300 000 ₽, приостановление деятельности — до 90 суток. Цена неготовности выше цены подготовки.</div>
+</div>
+<div class="card">
+<h3>Проверки стали регулярнее</h3>
+<p>Профилактические визиты и проверки Роспотребнадзора и Росздравнадзора: 90% пунктов чек-листа можно закрыть заранее — до визита инспектора.</p>
+<p style="margin-top:14px;font-style:italic;color:var(--blue)">Мы готовим бизнес к проверке до того, как она пришла. А если пришла — стоим рядом до результата.</p>
+</div>
+</div>
+</div>
+</section>
+
+<div class="cta">
+<h2>Проверка придёт — вопрос только «когда»</h2>
+<p>Запишитесь на бесплатную консультацию: за 15 минут оценим ваши риски и предложим план.</p>
+<a class="btn primary" href="tel:+79143896969">+7 (914) 389-69-69</a>
+</div>
+
+<footer>
+<div class="wrap cols">
+<div class="col">
+<b>ООО «Дальневосточное бюро экспертиз»</b><br>
+Аккредитация Росаккредитации RA.RU.710669<br>
+ГОСТ Р ИСО/МЭК 17020-2012
+</div>
+<div class="col">
+<b>Контакты</b><br>
+г. Благовещенск, ул. Шевченко, 7, офис 307<br>
+<a href="tel:+79143896969">+7 (914) 389-69-69</a><br>
+<a href="mailto:office@двэб.рф">office@двэб.рф</a> · <a href="https://двэб.рф">двэб.рф</a>
+</div>
+</div>
+</footer>
+
+</body>
+</html>
